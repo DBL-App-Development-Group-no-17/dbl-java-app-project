@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/email-input-bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:visibility="visible"
+    tools:visibility="visible">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email-input"
+        android:layout_width="371dp"
+        android:layout_height="56dp"
+        android:layout_margin="10dp"
+        android:background="#1C5E5E"
+        android:editable="true"
+        android:hint="Email ID"
+        android:padding="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:password="false"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="142dp"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:background="#F49F2C"
+        android:lineSpacingExtra="27sp"
+        android:text="Login"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#323B44"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:backgroundTint="#F49F2C"
+        app:backgroundTintMode="src_over"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="338dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TutorHub"
+        android:textColor="#F49F2C"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="53dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email-input"
+        android:layout_width="371dp"
+        android:layout_height="56dp"
+        android:background="#FF1C5E5E"
+        android:editable="true"
+        android:hint="Password"
+        android:password="true"
+        android:textColor="#323B44"
+        android:textColorHint="#000000"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="233dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="233dp"
+        android:layout_height="34dp"
+        android:text="Don't have an account? "
+        android:textColor="#323B44"
+        android:textSize="22sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="471dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register now!"
+        android:textColor="#F49F2C"
+        android:textSize="22sp"
+        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteY="471dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo_login"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="579dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
