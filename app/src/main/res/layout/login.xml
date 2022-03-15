@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/email-input-bar"
+    android:id="@+id/loginpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
@@ -10,7 +10,7 @@
     tools:visibility="visible">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email-input"
+        android:id="@+id/emailinput"
         android:layout_width="371dp"
         android:layout_height="56dp"
         android:layout_margin="10dp"
@@ -58,7 +58,7 @@
         tools:layout_editor_absoluteY="53dp" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email-input"
+        android:id="@+id/passwordinput"
         android:layout_width="371dp"
         android:layout_height="56dp"
         android:background="#FF1C5E5E"
