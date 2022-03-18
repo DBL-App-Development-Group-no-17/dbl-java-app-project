@@ -14,8 +14,9 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        Button btn_login = findViewById(R.id.button);
+        Button btn_login = findViewById(R.id.login_btn);
         btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
@@ -23,8 +24,9 @@ public class Login extends AppCompatActivity {
 
         TextView txt_register = findViewById(R.id.register_txt);
         txt_register.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-              //  startActivity(new Intent(getApplicationContext(), RegistrationPage.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
     }
