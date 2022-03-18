@@ -96,9 +96,4 @@ public class User {
      */
     public UserRoles getTutorRole() { return tutorRole; }
 
-
-
-
-
-
 }
