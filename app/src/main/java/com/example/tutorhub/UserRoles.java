@@ -3,7 +3,7 @@ package com.example.tutorhub;
 import java.util.List;
 
 public class UserRoles {
-    /** variable declerations */
+    /** variable declarations */
     private List<Subject> subjectTags;
 
     /**
@@ -20,6 +20,9 @@ public class UserRoles {
         subjectTags.add(subjectTag);
     }
 
+    /**
+     * @return subjectTags
+     */
     public List<Subject> getSubjectTags(){
         return subjectTags;
     }
