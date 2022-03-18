@@ -39,7 +39,7 @@
         tools:visibility="visible" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login_btn"
         android:layout_width="120dp"
         android:layout_height="55dp"
         android:layout_marginStart="145dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordinput" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
@@ -121,7 +121,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/register_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="257dp"
@@ -133,6 +133,8 @@
         android:text="Register now!"
         android:textColor="#F49F2C"
         android:textSize="22sp"
+        android:onClick="onClick"
+        android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
