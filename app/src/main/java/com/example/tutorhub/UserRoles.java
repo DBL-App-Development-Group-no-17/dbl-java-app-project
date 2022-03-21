@@ -12,10 +12,8 @@ public class UserRoles {
      * @throws IllegalArgumentException if {@code subjectTags.contains(subjectTag)}
      */
     public void setSubjectTag(Subject subjectTag) {
-        for (Subject x: subjectTags) {
-            if (x.equals(subjectTag)) {
-                throw new IllegalArgumentException(subjectTag + " already in list");
-            }
+        if (subjectTags.contains(subjectTag)) {
+            throw new IllegalArgumentException(subjectTag + " already in list");
         }
         subjectTags.add(subjectTag);
     }
