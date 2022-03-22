@@ -17,8 +17,7 @@
             android:id="@+id/emailinput"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_margin="10dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="81dp"
             android:background="#1C5E5E"
             android:editable="true"
@@ -35,7 +34,6 @@
             app:layout_constraintBottom_toTopOf="@+id/passwordinput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
             tools:visibility="visible" />
 
         <Button
@@ -75,34 +73,31 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordinput"
-            android:layout_width="371dp"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
             android:background="#FF1C5E5E"
             android:editable="true"
             android:hint="Password"
             android:password="true"
             android:textColor="#323B44"
             android:textColorHint="#FFC107"
-            app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailinput" />
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="233dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="56dp"
             android:text="Don't have an account? "
             android:textColor="#323B44"
             android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/passwordinput"
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <TextView
