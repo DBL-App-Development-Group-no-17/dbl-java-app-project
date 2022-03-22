@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
         txt_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), RegistrationPage.class));
             }
         });
     }
