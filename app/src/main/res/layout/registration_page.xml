@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/black">
 
         <ToggleButton
             android:id="@+id/toggle_student"
@@ -20,6 +21,8 @@
             android:text="Student"
             android:textOff="Student"
             android:textOn="Student"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/usernameInput"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,6 +35,8 @@
             android:text="Tutor"
             android:textOff="Tutor"
             android:textOn="Tutor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/usernameInput"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,9 +46,11 @@
             android:layout_height="@dimen/textInput_height"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="24dp"
+            android:padding="@dimen/textInput_padding"
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toggle_student" />
@@ -55,8 +62,10 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:ems="10"
+            android:padding="@dimen/textInput_padding"
             android:hint="Name"
             android:inputType="textPersonName"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/usernameInput" />
@@ -68,8 +77,10 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:ems="10"
+            android:padding="@dimen/textInput_padding"
             android:hint="Email"
             android:inputType="textPersonName"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameInput" />
@@ -81,8 +92,10 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:ems="10"
-            android:hint="Password"
+            android:padding="@dimen/textInput_padding"
+            android:hint=" Password"
             android:inputType="textPassword"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailInput" />
@@ -94,8 +107,10 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:ems="10"
+            android:padding="@dimen/textInput_padding"
             android:hint="Re-enter Password"
             android:inputType="textPassword"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
@@ -107,8 +122,10 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:ems="10"
+            android:padding="@dimen/textInput_padding"
             android:hint="Name of Educational Institution"
             android:inputType="textPersonName"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password2Input" />
@@ -120,8 +137,10 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:ems="10"
+            android:padding="@dimen/textInput_padding"
             android:hint="Phone Number"
             android:inputType="textPersonName"
+            android:background="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/educ_inst" />
@@ -133,6 +152,9 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/allow_this_app_to_use_my_location"
+            android:textColor="@color/black_200"
+            android:textSize="18sp"
+            android:buttonTint="@color/textbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phonenr_input" />
@@ -144,7 +166,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Button"
+            android:text="Register"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black_200"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/orange_500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox_loc" />
