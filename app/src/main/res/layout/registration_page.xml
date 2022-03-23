@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/nameInput"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="52dp"
@@ -16,10 +16,10 @@
         android:hint="Name"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameInput" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/emailInput"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="52dp"
@@ -29,10 +29,10 @@
         android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passwordInput"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="52dp"
@@ -42,10 +42,10 @@
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/emailInput" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/password2Input"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="52dp"
@@ -55,10 +55,10 @@
         android:hint="Re-enter Password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/educ_inst"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="52dp"
@@ -68,10 +68,10 @@
         android:hint="Name of Educational Institution"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/password2Input" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/phonenr_input"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="52dp"
@@ -81,10 +81,10 @@
         android:hint="Phone Number"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/educ_inst" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_loc"
         android:layout_width="299dp"
         android:layout_height="46dp"
         android:layout_marginStart="52dp"
@@ -92,10 +92,10 @@
         android:layout_marginTop="16dp"
         android:text="@string/allow_this_app_to_use_my_location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/phonenr_input" />
 
     <ToggleButton
-        android:id="@+id/toggleButton"
+        android:id="@+id/toggle_student"
         android:layout_width="124dp"
         android:layout_height="57dp"
         android:layout_marginStart="52dp"
@@ -110,7 +110,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/reg_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="156dp"
@@ -118,10 +118,10 @@
         android:layout_marginTop="20dp"
         android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_loc" />
 
     <ToggleButton
-        android:id="@+id/toggleButton2"
+        android:id="@+id/toggle_tutor"
         android:layout_width="124dp"
         android:layout_height="57dp"
         android:layout_marginStart="48dp"
@@ -131,11 +131,11 @@
         android:text="Tutor"
         android:textOff="Tutor"
         android:textOn="Tutor"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton"
+        app:layout_constraintStart_toEndOf="@+id/toggle_student"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/usernameInput"
         android:layout_width="296dp"
         android:layout_height="45dp"
         android:layout_marginStart="56dp"
@@ -145,6 +145,6 @@
         android:hint="Username"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/toggle_student" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
