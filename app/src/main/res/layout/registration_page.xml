@@ -35,10 +35,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:id="@+id/nameInput"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Username"
@@ -58,95 +59,140 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameInput" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/emailInput"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/passwordInput"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/emailInput" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/password2Input"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Re-enter Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/educ_inst"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Name of Educational Institution"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/password2Input" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/phonenr_input"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/educ_inst" />
 
     <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/textInput_height"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/checkBox_loc"
+        android:layout_width="299dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="16dp"
         android:text="@string/allow_this_app_to_use_my_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/phonenr_input" />
 
-
+    <ToggleButton
+        android:id="@+id/toggle_student"
+        android:layout_width="124dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/toggle_button_colors"
+        android:checked="false"
+        android:text="Student"
+        android:textOff="Student"
+        android:textOn="Student"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/reg_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_loc" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    <ToggleButton
+        android:id="@+id/toggle_tutor"
+        android:layout_width="124dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/toggle_button_colors"
+        android:text="Tutor"
+        android:textOff="Tutor"
+        android:textOn="Tutor"
+        app:layout_constraintStart_toEndOf="@+id/toggle_student"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_student" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

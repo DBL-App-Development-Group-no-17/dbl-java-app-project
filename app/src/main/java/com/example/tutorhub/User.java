@@ -25,6 +25,16 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber, String university ){
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        if (student) { this.studentRole = new Student(); }
+        if (tutor) { this.studentRole = new Tutor(); }
+        this.phoneNumber = phoneNumber;
+        this.university = university;
+    }
+
     /**
      * Resets Password of User
      * @param newPassword to be set
