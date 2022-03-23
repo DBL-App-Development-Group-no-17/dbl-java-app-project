@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TutorHub</string>
+    <string name="allow_this_app_to_use_my_location">Allow this app to use my location</string>
 </resources>

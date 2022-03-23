@@ -10,8 +10,20 @@ public class User {
     private UserRoles tutorRole = null;
     private String name;
     private String university;
+    private String phoneNumber;
 
     /* Method declarations */
+    /**
+     * Constructor
+     */
+    User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber ){
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        if (student) { this.studentRole = new Student(); }
+        if (tutor) { this.studentRole = new Tutor(); }
+        this.phoneNumber = phoneNumber;
+    }
 
     /**
      * Resets Password of User
