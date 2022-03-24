@@ -1,5 +1,6 @@
 package com.example.tutorhub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,18 +10,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * To add:
- * valid phone number verification
- * valid email verification
- */
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class RegistrationPage extends AppCompatActivity {
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
+        mAuth=FirebaseAuth.getInstance();
 
         // variables
         EditText userName = findViewById(R.id.usernameInput);
@@ -38,6 +42,8 @@ public class RegistrationPage extends AppCompatActivity {
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String userEmail = email.getText().toString().trim();
+                String userPassword= password.getText().toString().trim();
                 boolean fine = true;
                 /** if required field are empty, signal to user */
                 if(TextUtils.isEmpty(name.getText())){
@@ -82,25 +88,27 @@ public class RegistrationPage extends AppCompatActivity {
                     fine = false;
                 }
                 if(fine) {
-                    User user;
-                    if (TextUtils.isEmpty(educationalInstitution.getText())){
-                         user = new User(userName.getText().toString(),
-                                name.getText().toString(),
-                                password.getText().toString(),
-                                student.isChecked(),
-                                tutor.isChecked(),
-                                phoneNumber.getText().toString());
-                    }
-                    else{
-                        user = new User(userName.getText().toString(),
-                                name.getText().toString(),
-                                password.getText().toString(),
-                                student.isChecked(),
-                                tutor.isChecked(),
-                                phoneNumber.getText().toString(),
-                                educationalInstitution.getText().toString());
-
-                    }
+                    mAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful())
+                            {
+                                Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            }
+                            else
+                            {
+                                Toast.makeText(RegistrationPage.this,"You are not Registered! Try again",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    /*User user = new User(userName.getText().toString(),
+                            name.getText().toString(),
+                            password.getText().toString(),
+                            student.isChecked(),
+                            tutor.isChecked(),
+                            phoneNumber.getText().toString());
+                    System.out.println(user.getUsername());*/
                 }
 
             }
