@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "118751240255",
+    "firebase_url": "https://tutorhub-18f6b-default-rtdb.firebaseio.com",
+    "project_id": "tutorhub-18f6b",
+    "storage_bucket": "tutorhub-18f6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118751240255:android:518a5c38e60b2582b3d88a",
+        "android_client_info": {
+          "package_name": "com.example.tutorhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118751240255-kgfplb6692jvcurm98j667ssq98tej44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnk2LKoaJ4fq5BEMo1HJ9QDWSdrtfcqcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118751240255-kgfplb6692jvcurm98j667ssq98tej44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
