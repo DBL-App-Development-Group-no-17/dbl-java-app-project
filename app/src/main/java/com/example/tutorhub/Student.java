@@ -1,11 +1,12 @@
 package com.example.tutorhub;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends UserRoles {
     /** variable declerations */
     private int radius;
-    private List<User> tutorHistory;
+    private List<User> tutorHistory = new ArrayList<>();
 
     /**
      * Sets radius of student

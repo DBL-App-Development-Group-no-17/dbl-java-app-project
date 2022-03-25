@@ -1,5 +1,6 @@
 package com.example.tutorhub;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tutor extends UserRoles{
@@ -12,7 +13,7 @@ public class Tutor extends UserRoles{
 
     /** variable declerations */
     private String contactInfo;
-    private List<User> studentHistory;
+    private List<User> studentHistory = new ArrayList<>();;
     private float rating = -1;
 
     /**
