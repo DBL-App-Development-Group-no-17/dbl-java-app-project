@@ -6,8 +6,8 @@ public class User {
     /** User based variables */
     private String username;
     private String password;
-    private UserRoles studentRole = null;
-    private UserRoles tutorRole = null;
+    private Student studentRole = null;
+    private Tutor tutorRole = null;
     private String name;
     private String university;
     private String phoneNumber;
@@ -23,7 +23,7 @@ public class User {
         this.name = name;
         this.password = password;
         if (student) { this.studentRole = new Student(); }
-        if (tutor) { this.studentRole = new Tutor(); }
+        if (tutor) { this.tutorRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
@@ -34,7 +34,7 @@ public class User {
         this.name = name;
         this.password = password;
         if (student) { this.studentRole = new Student(); }
-        if (tutor) { this.studentRole = new Tutor(); }
+        if (tutor) { this.tutorRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
         this.university = university;
         this.email = email;
@@ -108,7 +108,7 @@ public class User {
      * @param role role to add
      * @throws IllegalArgumentException if user already has role
      */
-    public void addTutorRole(UserRoles role) {
+    public void addTutorRole(Tutor role) {
         if(tutorRole != null) {
             throw new IllegalArgumentException("User already is a tutor");
         }
@@ -120,7 +120,7 @@ public class User {
      * @param role role to add
      * @throws IllegalArgumentException if user already has role
      */
-    public void addStudentRole(UserRoles role) {
+    public void addStudentRole(Student role) {
         if(studentRole != null) {
             throw new IllegalArgumentException("User already is a student");
         }
@@ -140,11 +140,11 @@ public class User {
     /**
      * @return studentRole
      */
-    public UserRoles getStudentRole() { return studentRole; }
+    public Student getStudentRole() { return studentRole; }
 
     /**
      * @return studentRole
      */
-    public UserRoles getTutorRole() { return tutorRole; }
+    public Tutor getTutorRole() { return tutorRole; }
 
 }
