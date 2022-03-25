@@ -1,5 +1,6 @@
 package com.example.tutorhub;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tutor extends UserRoles{
@@ -12,8 +13,8 @@ public class Tutor extends UserRoles{
 
     /** variable declerations */
     private String contactInfo;
-    private List<User> studentHistory;
-    private float rating = -1;
+    private List<User> studentHistory = new ArrayList<>();
+    private float rating = 0;
 
     /**
      * adds rating to tutor
@@ -26,7 +27,7 @@ public class Tutor extends UserRoles{
         if (this.rating < 0) {
             this.rating = rating;
         }
-        else{
+        else {
             this.rating = (float) (this.rating + rating)/2;
         }
     }

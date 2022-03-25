@@ -1,10 +1,11 @@
 package com.example.tutorhub;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRoles {
     /** variable declarations */
-    private List<Subject> subjectTags;
+    private List<Subject> subjectTags = new ArrayList<>();
 
     /**
      * Add subject to subject tags
