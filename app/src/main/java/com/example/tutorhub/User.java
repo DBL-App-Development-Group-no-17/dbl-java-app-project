@@ -11,21 +11,25 @@ public class User {
     private String name;
     private String university;
     private String phoneNumber;
+    private String email;
 
     /* Method declarations */
     /**
      * Constructor
      */
-    User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber ){
+    User(String username, String name, String password, boolean student, boolean tutor,
+         String phoneNumber, String email) {
         this.username = username;
         this.name = name;
         this.password = password;
         if (student) { this.studentRole = new Student(); }
         if (tutor) { this.studentRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
+        this.email = email;
     }
 
-    User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber, String university ){
+    User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber,
+         String university, String email) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -33,6 +37,7 @@ public class User {
         if (tutor) { this.studentRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
         this.university = university;
+        this.email = email;
     }
 
     /**
@@ -55,6 +60,30 @@ public class User {
      */
     public String getUsername() {
         return username;
+    }
+
+    /**
+     * Returns email of user
+     * @return {@code this.email}
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Returns phone number of user
+     * @return {@code this.phoneNumber}
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Returns name of user
+     * @return {@code this.name}
+     */
+    public String getName() {
+        return name;
     }
 
     /**

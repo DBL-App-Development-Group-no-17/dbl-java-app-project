@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * To add:
@@ -25,22 +27,33 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class RegistrationPage extends AppCompatActivity {
     FirebaseAuth mAuth;
+    private DatabaseReference mDb;
+
+    EditText userName;
+    EditText name;
+    EditText email;
+    EditText educationalInstitution;
+    EditText phoneNumber;
+    EditText password;
+    ToggleButton student;
+    ToggleButton tutor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         // variables
-        EditText userName = findViewById(R.id.usernameInput);
-        EditText name = findViewById(R.id.nameInput);
-        EditText email = findViewById(R.id.emailInput);
-        EditText educationalInstitution = findViewById(R.id.educ_inst);
-        EditText phoneNumber = findViewById(R.id.phonenr_input);
-        EditText password = findViewById(R.id.passwordInput);
+        userName = findViewById(R.id.usernameInput);
+        name = findViewById(R.id.nameInput);
+        email = findViewById(R.id.emailInput);
+        educationalInstitution = findViewById(R.id.educ_inst);
+        phoneNumber = findViewById(R.id.phonenr_input);
+        password = findViewById(R.id.passwordInput);
         EditText passwordCheck = findViewById(R.id.password2Input);
-        ToggleButton student = findViewById(R.id.toggle_student);
-        ToggleButton tutor = findViewById(R.id.toggle_tutor);
+        student = findViewById(R.id.toggle_student);
+        tutor = findViewById(R.id.toggle_tutor);
         CheckBox checkBox = findViewById(R.id.checkBox_loc);
 
         Button logIn = findViewById(R.id.reg_button);
@@ -98,38 +111,45 @@ public class RegistrationPage extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful())
                             {
+                                writeNewUser();
                                 Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Home.class));
+                                startActivity(new Intent(getApplicationContext(), Login.class));
                             }
                             else
                             {
+                                writeNewUser();
                                 Toast.makeText(RegistrationPage.this,"You are not Registered! Try again",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                    User user;
-                    if (TextUtils.isEmpty(educationalInstitution.getText())){
-                         user = new User(userName.getText().toString(),
-                                name.getText().toString(),
-                                password.getText().toString(),
-                                student.isChecked(),
-                                tutor.isChecked(),
-                                phoneNumber.getText().toString());
-                    }
-                    else{
-                        user = new User(userName.getText().toString(),
-                                name.getText().toString(),
-                                password.getText().toString(),
-                                student.isChecked(),
-                                tutor.isChecked(),
-                                phoneNumber.getText().toString(),
-                                educationalInstitution.getText().toString());
-
-                    }
                 }
-
             }
         });
+    }
 
+    public void writeNewUser() {
+        mDb = FirebaseDatabase.getInstance().getReference();
+        User user;
+        if (TextUtils.isEmpty(educationalInstitution.getText())){
+            user = new User(userName.getText().toString(),
+                    name.getText().toString(),
+                    password.getText().toString(),
+                    student.isChecked(),
+                    tutor.isChecked(),
+                    phoneNumber.getText().toString(),
+                    email.getText().toString());
+        }
+        else {
+            user = new User(userName.getText().toString(),
+                    name.getText().toString(),
+                    password.getText().toString(),
+                    student.isChecked(),
+                    tutor.isChecked(),
+                    phoneNumber.getText().toString(),
+                    educationalInstitution.getText().toString(),
+                    email.getText().toString());
+        }
+
+        mDb.child("users").child(userName.getText().toString()).setValue(user);
     }
 }
