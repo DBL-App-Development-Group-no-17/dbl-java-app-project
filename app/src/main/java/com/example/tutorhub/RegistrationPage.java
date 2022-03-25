@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Console;
+
 /**
  * To add:
  * valid phone number verification
@@ -85,12 +87,11 @@ public class RegistrationPage extends AppCompatActivity {
                     fine = false;
                 }
                 if(TextUtils.isEmpty(userName.getText())){
-                    userName.setError("please re-enter password");
+                    userName.setError("Username required");
                     fine = false;
                 }
                 if(!passwordCheck.getText().toString()
                         .equals(password.getText().toString())){
-                    password.setError("Passwords do not match");
                     passwordCheck.setError("Passwords do not match");
                     fine = false;
                 }

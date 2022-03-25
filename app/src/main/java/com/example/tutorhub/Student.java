@@ -6,7 +6,7 @@ import java.util.List;
 public class Student extends UserRoles {
     /** variable declerations */
     private int radius;
-    private List<User> tutorHistory = new ArrayList<>();
+    private List<String> tutorHistory = new ArrayList<>();
 
     /**
      * Sets radius of student
@@ -32,13 +32,13 @@ public class Student extends UserRoles {
      */
     public void addTutor(User tutor){
         if(!tutor.isTutor()) { throw new IllegalArgumentException("User is not a tutor"); }
-        tutorHistory.add(tutor);
+        tutorHistory.add(tutor.getUsername());
     }
 
     /**
      * @return tutorHistory
      */
-    public List<User> getTutorHistory() { return tutorHistory; }
+    public List<String> getTutorHistory() { return tutorHistory; }
 
 }
 
