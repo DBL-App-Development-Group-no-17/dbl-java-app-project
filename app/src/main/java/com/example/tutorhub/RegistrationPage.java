@@ -1,5 +1,6 @@
 package com.example.tutorhub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,7 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * To add:
@@ -17,10 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
  * valid email verification
  */
 public class RegistrationPage extends AppCompatActivity {
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
+        mAuth=FirebaseAuth.getInstance();
 
         // variables
         EditText userName = findViewById(R.id.usernameInput);
@@ -39,6 +48,8 @@ public class RegistrationPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean fine = true;
+                String userEmail = email.getText().toString().trim();
+                String userPassword= password.getText().toString().trim();
                 /** if required field are empty, signal to user */
                 if(TextUtils.isEmpty(name.getText())){
                     name.setError("Name required");
@@ -82,6 +93,20 @@ public class RegistrationPage extends AppCompatActivity {
                     fine = false;
                 }
                 if(fine) {
+                    mAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful())
+                            {
+                                Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), Home.class));
+                            }
+                            else
+                            {
+                                Toast.makeText(RegistrationPage.this,"You are not Registered! Try again",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     User user;
                     if (TextUtils.isEmpty(educationalInstitution.getText())){
                          user = new User(userName.getText().toString(),
