@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(loginEmail,loginPassword).addOnCompleteListener(task -> {
                     if(task.isSuccessful())
                     {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), Home.class));
                     }
                     else
                     {

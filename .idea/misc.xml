@@ -10,7 +10,13 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1286727456940223" />
+        <entry key="app/src/main/res/layout/dm.xml" value="0.16785714285714284" />
+        <entry key="app/src/main/res/layout/filter.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/home.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/map.xml" value="0.1276595744680851" />
+        <entry key="app/src/main/res/layout/registration_page.xml" value="0.2" />
       </map>
     </option>
   </component>

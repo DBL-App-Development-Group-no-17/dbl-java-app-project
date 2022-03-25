@@ -1,5 +1,6 @@
 package com.example.tutorhub;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tutor extends UserRoles{
@@ -12,7 +13,7 @@ public class Tutor extends UserRoles{
 
     /** variable declerations */
     private String contactInfo;
-    private List<User> studentHistory;
+    private List<String> studentHistory = new ArrayList<>();
     private float rating = -1;
 
     /**
@@ -49,13 +50,13 @@ public class Tutor extends UserRoles{
      */
     public void addTutor(User student){
         if(!student.isStudent()) { throw new IllegalArgumentException("User is not a student"); }
-        studentHistory.add(student);
+        studentHistory.add(student.getUsername());
     }
 
     /**
      * @return tutorHistory
      */
-    public List<User> getStudentHistory() { return studentHistory; }
+    public List<String> getStudentHistory() { return studentHistory; }
 
 
 

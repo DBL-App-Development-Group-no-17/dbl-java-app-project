@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/filtersTextArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Filters"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FF9800"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Cancel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black_200"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@+id/filtersTextArea"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/reset_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Reset"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black_200"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/filtersTextArea"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/save_filters_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="53dp"
+            android:text="Save Filters"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/orange_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/data_structures_button" />
+
+        <TextView
+            android:id="@+id/subject_tags_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:text="Select subject tags"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range_progress" />
+
+        <TextView
+            android:id="@+id/search_radius_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:text="Set search radius"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/distance_button" />
+
+        <TextView
+            android:id="@+id/sort_results_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Sort my results by"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filtersTextArea" />
+
+        <ToggleButton
+            android:id="@+id/distance_button"
+            android:layout_width="146dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/toggle_button_colors"
+            android:checked="true"
+            android:text="@string/distance_sort"
+            android:textOff="@string/distance_sort"
+            android:textOn="@string/distance_sort"
+            app:layout_constraintEnd_toStartOf="@+id/rating_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sort_results_text" />
+
+        <ToggleButton
+            android:id="@+id/rating_button"
+            android:layout_width="140dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginRight="56dp"
+            android:background="@drawable/toggle_button_colors"
+            android:text="@string/rating_sort"
+            android:textOff="@string/rating_sort"
+            android:textOn="@string/rating_sort"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/distance_button"
+            app:layout_constraintTop_toBottomOf="@+id/sort_results_text" />
+
+        <ToggleButton
+            android:id="@+id/math_button"
+            android:layout_width="142dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/toggle_button_colors"
+            android:text="@string/subject_math"
+            android:textOff="@string/subject_math"
+            android:textOn="@string/subject_math"
+            app:layout_constraintEnd_toStartOf="@+id/english_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subject_tags_text" />
+
+        <ToggleButton
+            android:id="@+id/english_button"
+            android:layout_width="140dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginRight="59dp"
+            android:background="@drawable/toggle_button_colors"
+            android:text="@string/subject_english"
+            android:textOff="@string/subject_english"
+            android:textOn="@string/subject_english"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/math_button"
+            app:layout_constraintTop_toBottomOf="@+id/subject_tags_text" />
+
+        <ToggleButton
+            android:id="@+id/physics_button"
+            android:layout_width="142dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/toggle_button_colors"
+            android:text="@string/subject_physics"
+            android:textOff="@string/subject_physics"
+            android:textOn="@string/subject_physics"
+            app:layout_constraintEnd_toStartOf="@+id/chemistry_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/math_button" />
+
+        <ToggleButton
+            android:id="@+id/chemistry_button"
+            android:layout_width="142dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="57dp"
+            android:layout_marginRight="57dp"
+            android:background="@drawable/toggle_button_colors"
+            android:text="@string/subject_chemistry"
+            android:textOff="@string/subject_chemistry"
+            android:textOn="@string/subject_chemistry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/physics_button"
+            app:layout_constraintTop_toBottomOf="@+id/english_button" />
+
+        <ToggleButton
+            android:id="@+id/data_structures_button"
+            android:layout_width="165dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginLeft="125dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="121dp"
+            android:layout_marginRight="121dp"
+            android:background="@drawable/toggle_button_colors"
+            android:text="@string/subject_data_structures"
+            android:textOff="@string/subject_data_structures"
+            android:textOn="@string/subject_data_structures"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/physics_button" />
+
+        <SeekBar
+            android:id="@+id/range_bar"
+            android:layout_width="293dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="37dp"
+            android:progress="50"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_radius_text" />
+
+        <TextView
+            android:id="@+id/range_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="5 km"
+            android:textColor="@color/black_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range_bar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
