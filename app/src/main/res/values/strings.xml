@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">TutorHub</string>
     <string name="allow_this_app_to_use_my_location">Allow this app to use my location</string>
+    <string name="distance_sort">Distance</string>
+    <string name="rating_sort">Rating</string>
+    <string name="subject_math">Math</string>
+    <string name="subject_english">English</string>
+    <string name="subject_physics">Physics</string>
+    <string name="subject_chemistry">Chemistry</string>
+    <string name="subject_data_structures">Data Structures</string>
 </resources>
