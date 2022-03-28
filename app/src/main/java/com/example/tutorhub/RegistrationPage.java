@@ -3,6 +3,7 @@ package com.example.tutorhub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -56,6 +57,8 @@ public class RegistrationPage extends AppCompatActivity {
         tutor = findViewById(R.id.toggle_tutor);
         CheckBox checkBox = findViewById(R.id.checkBox_loc);
 
+
+
         Button logIn = findViewById(R.id.reg_button);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,20 +108,23 @@ public class RegistrationPage extends AppCompatActivity {
                     checkBox.setError("Must be checked to create account");
                     fine = false;
                 }
-                if(fine) {
-                    mAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                if (fine) {
+                    mAuth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful())
+                            if (task.isSuccessful())
                             {
-                                writeNewUser();
+                                String email = writeNewUser();
                                 Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Login.class));
+                                Intent intent = new Intent(getApplicationContext(), Login.class);
+                                intent.putExtra("email", email);
+                                startActivity(intent);
+                                finish();
                             }
                             else
                             {
-                                writeNewUser();
-                                Toast.makeText(RegistrationPage.this,"You are not Registered! Try again",Toast.LENGTH_SHORT).show();
+                                String excString = task.getException().getMessage();
+                                Toast.makeText(RegistrationPage.this, excString, Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -127,7 +133,7 @@ public class RegistrationPage extends AppCompatActivity {
         });
     }
 
-    public void writeNewUser() {
+    public String writeNewUser() {
         mDb = FirebaseDatabase.getInstance().getReference();
         User user;
         if (TextUtils.isEmpty(educationalInstitution.getText())){
@@ -150,6 +156,8 @@ public class RegistrationPage extends AppCompatActivity {
                     email.getText().toString());
         }
 
-        mDb.child("users").child(userName.getText().toString()).setValue(user);
+
+        mDb.child("users").child(user.getEmail()).setValue(user);
+        return user.getEmail();
     }
 }

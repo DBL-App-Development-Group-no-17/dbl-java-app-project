@@ -14,11 +14,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        mAuth=FirebaseAuth.getInstance();
+
+        mAuth = FirebaseAuth.getInstance();
 
         EditText password = findViewById(R.id.passwordinput);
         EditText email = findViewById(R.id.emailinput);
@@ -27,17 +29,18 @@ public class Login extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String loginEmail= email.getText().toString().trim();
-                String loginPassword=password.getText().toString().trim();
-                mAuth.signInWithEmailAndPassword(loginEmail,loginPassword).addOnCompleteListener(task -> {
-                    if(task.isSuccessful())
+                String loginEmail = email.getText().toString().trim();
+                String loginPassword = password.getText().toString().trim();
+                mAuth.signInWithEmailAndPassword(loginEmail, loginPassword).addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
                     {
                         startActivity(new Intent(getApplicationContext(), Home.class));
                     }
                     else
                     {
+                        String excString = task.getException().getMessage();
                         Toast.makeText(Login.this,
-                                "Please Check Your login Credentials",
+                                excString,
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -51,7 +54,22 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), RegistrationPage.class));
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String username;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            username = extras.getString("email");
+            EditText email = findViewById(R.id.emailinput);
+            email.setText(username);
+        }
     }
 }
