@@ -30,9 +30,9 @@ public class Student extends UserRoles {
      * @param tutor to be added
      * @throws IllegalArgumentException if {@code tutor.isTutor() == false}
      */
-    public void addTutor(User tutor){
-        if(!tutor.isTutor()) { throw new IllegalArgumentException("User is not a tutor"); }
-        tutorHistory.add(tutor.getUsername());
+    public void addTutor(String tutor){
+       // if(!tutor.isTutor()) { throw new IllegalArgumentException("User is not a tutor"); }
+        tutorHistory.add(tutor);
     }
 
     /**

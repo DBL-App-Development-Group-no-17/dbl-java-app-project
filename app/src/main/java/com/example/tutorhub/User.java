@@ -27,6 +27,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+    User(){
+
+    }
 
     User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber,
          String university, String email) {
