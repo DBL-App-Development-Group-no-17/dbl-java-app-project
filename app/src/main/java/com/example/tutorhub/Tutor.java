@@ -6,7 +6,7 @@ import java.util.List;
 public class Tutor extends UserRoles{
     /*
      * To add:
-     * Tutor location
+     * Tutor locations
      */
 
 

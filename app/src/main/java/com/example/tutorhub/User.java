@@ -13,7 +13,7 @@ public class User {
     private String phoneNumber;
     private String email;
 
-    /* Method declarations */
+
     /**
      * Constructor
      */

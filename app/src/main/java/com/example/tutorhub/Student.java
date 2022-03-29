@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends UserRoles {
-    /** variable declerations */
+    /** variable declarations */
     private int radius;
     private List<String> tutorHistory = new ArrayList<>();
 
