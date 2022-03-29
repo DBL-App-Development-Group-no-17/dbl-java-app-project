@@ -13,7 +13,7 @@ public class Tutor extends UserRoles{
 
     /** variable declerations */
     private String contactInfo;
-    private List<User> studentHistory = new ArrayList<>();
+    private List<String> studentHistory = new ArrayList<>();
     private float rating = -1;
 
     /**
@@ -48,15 +48,15 @@ public class Tutor extends UserRoles{
      * @param student to be added
      * @throws IllegalArgumentException if {@code student.isStudent() == false}
      */
-    public void addTutor(User student){
-        if(!student.isStudent()) { throw new IllegalArgumentException("User is not a student"); }
+    public void addTutor(String student){
+       // if(!student.isStudent()) { throw new IllegalArgumentException("User is not a student"); }
         studentHistory.add(student);
     }
 
     /**
      * @return tutorHistory
      */
-    public List<User> getStudentHistory() { return studentHistory; }
+    public List<String> getStudentHistory() { return studentHistory; }
 
 
 
