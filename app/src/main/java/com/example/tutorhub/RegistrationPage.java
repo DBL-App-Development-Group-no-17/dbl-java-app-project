@@ -17,10 +17,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Console;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * To add:
@@ -45,6 +50,8 @@ public class RegistrationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
         mAuth = FirebaseAuth.getInstance();
+
+
 
         // variables
         userName = findViewById(R.id.usernameInput);
@@ -106,29 +113,65 @@ public class RegistrationPage extends AppCompatActivity {
                     checkBox.setError("Must be checked to create account");
                     fine = false;
                 }
-                if(fine) {
-                    mAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful())
-                            {
-                                writeNewUser();
-                                Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Login.class));
+                ArrayList<Boolean> boolArr = new ArrayList<>();
+                boolArr.add(fine);
+                FirebaseDatabase.getInstance().getReference().child("usernames")
+                        .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if(task.isSuccessful()){
+                            String s = task.getResult().getValue().toString();
+                            String[] ss = s.split(", ");
+                            boolean matches = false;
+                            List<String> ss2 = new ArrayList<>();
+                            ss[0] = ss[0].substring(1);
+                            ss[ss.length-1] = ss[ss.length-1].substring(0,ss[ss.length-1].length()-1);
+                            for(int i = 0; i != ss.length; i++) {
+                                if (ss[i].equals(userName.getText().toString())){
+                                    matches = true;
+                                    break;
+                                }
+                                ss2.add(ss[i]);
                             }
-                            else
-                            {
-                                writeNewUser();
-                                Toast.makeText(RegistrationPage.this,"You are not Registered! Try again",Toast.LENGTH_SHORT).show();
+                            if(!matches && boolArr.get(0)) {
+                                ss2.add(userName.getText().toString());
+                                mAuth.createUserWithEmailAndPassword(userEmail,userPassword)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            System.out.println(ss2);
+                                            writeNewUser(ss2);
+                                            Toast.makeText(RegistrationPage.this,
+                                                    "You are successfully Registered",
+                                                    Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(),
+                                                    Login.class));
+                                        }
+                                        else
+                                        {
+                                            //writeNewUser(Array);
+                                            Toast.makeText(RegistrationPage.this,
+                                                    "You are not Registered! Try again",
+                                                    Toast.LENGTH_SHORT).show();
+                                            System.out.println(task.getException().getMessage());
+                                        }
+                                    }
+
+                                });
+                            }
+                            else{
+                                userName.setError("Username already used");
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
         });
     }
 
-    public void writeNewUser() {
+    public void writeNewUser(List<String> users) {
         mDb = FirebaseDatabase.getInstance().getReference();
         User user;
         if (TextUtils.isEmpty(educationalInstitution.getText())){
@@ -152,5 +195,6 @@ public class RegistrationPage extends AppCompatActivity {
         }
 
         mDb.child("users").child(userName.getText().toString()).setValue(user);
+        mDb.child("usernames").setValue(users);
     }
 }
