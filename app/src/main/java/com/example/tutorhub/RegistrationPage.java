@@ -3,6 +3,7 @@ package com.example.tutorhub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -50,8 +51,6 @@ public class RegistrationPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
         mAuth = FirebaseAuth.getInstance();
-
-
 
         // variables
         userName = findViewById(R.id.usernameInput);
@@ -119,21 +118,21 @@ public class RegistrationPage extends AppCompatActivity {
                         .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()){
                             String s = task.getResult().getValue().toString();
                             String[] ss = s.split(", ");
                             boolean matches = false;
                             List<String> ss2 = new ArrayList<>();
                             ss[0] = ss[0].substring(1);
                             ss[ss.length-1] = ss[ss.length-1].substring(0,ss[ss.length-1].length()-1);
-                            for(int i = 0; i != ss.length; i++) {
+                            for (int i = 0; i != ss.length; i++) {
                                 if (ss[i].equals(userName.getText().toString())){
                                     matches = true;
                                     break;
                                 }
                                 ss2.add(ss[i]);
                             }
-                            if(!matches && boolArr.get(0)) {
+                            if (!matches && boolArr.get(0)) {
                                 ss2.add(userName.getText().toString());
                                 mAuth.createUserWithEmailAndPassword(userEmail,userPassword)
                                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -142,26 +141,23 @@ public class RegistrationPage extends AppCompatActivity {
                                         if(task.isSuccessful())
                                         {
                                             System.out.println(ss2);
-                                            writeNewUser(ss2);
-                                            Toast.makeText(RegistrationPage.this,
-                                                    "You are successfully Registered",
-                                                    Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplicationContext(),
-                                                    Login.class));
+                                            String email = writeNewUser(ss2);
+                                            Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                                            intent.putExtra("email", email);
+                                            startActivity(intent);
+                                            finish();
                                         }
                                         else
                                         {
-                                            //writeNewUser(Array);
-                                            Toast.makeText(RegistrationPage.this,
-                                                    "You are not Registered! Try again",
-                                                    Toast.LENGTH_SHORT).show();
-                                            System.out.println(task.getException().getMessage());
+                                            String excString = task.getException().getMessage();
+                                            Toast.makeText(RegistrationPage.this, excString, Toast.LENGTH_LONG).show();
                                         }
                                     }
 
                                 });
                             }
-                            else{
+                            else {
                                 userName.setError("Username already used");
                             }
                         }
@@ -171,7 +167,7 @@ public class RegistrationPage extends AppCompatActivity {
         });
     }
 
-    public void writeNewUser(List<String> users) {
+    public String writeNewUser(List<String> users) {
         mDb = FirebaseDatabase.getInstance().getReference();
         User user;
         if (TextUtils.isEmpty(educationalInstitution.getText())){
@@ -194,7 +190,10 @@ public class RegistrationPage extends AppCompatActivity {
                     email.getText().toString());
         }
 
-        mDb.child("users").child(userName.getText().toString()).setValue(user);
+
+        mDb.child("users").child(user.getUsername()).setValue(user);
         mDb.child("usernames").setValue(users);
+        return user.getEmail();
+
     }
 }
