@@ -6,7 +6,7 @@ import java.util.List;
 public class Tutor extends UserRoles{
     /*
      * To add:
-     * Tutor location
+     * Tutor locations
      */
 
 
@@ -48,9 +48,9 @@ public class Tutor extends UserRoles{
      * @param student to be added
      * @throws IllegalArgumentException if {@code student.isStudent() == false}
      */
-    public void addTutor(User student){
-        if(!student.isStudent()) { throw new IllegalArgumentException("User is not a student"); }
-        studentHistory.add(student.getUsername());
+    public void addTutor(String student){
+       // if(!student.isStudent()) { throw new IllegalArgumentException("User is not a student"); }
+        studentHistory.add(student);
     }
 
     /**

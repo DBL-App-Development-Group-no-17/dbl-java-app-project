@@ -13,7 +13,7 @@ public class User {
     private String phoneNumber;
     private String email;
 
-    /* Method declarations */
+
     /**
      * Constructor
      */
@@ -26,6 +26,9 @@ public class User {
         if (tutor) { this.tutorRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+    User(){
+
     }
 
     User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber,
