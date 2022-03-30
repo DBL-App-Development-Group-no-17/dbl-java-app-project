@@ -11,7 +11,8 @@
         <entry key="..\:/Users/20200934/AndroidStudioProjects/TutorHub/app/src/main/res/layout/toggle_colors.xml" value="0.24547101449275363" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1286727456940223" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/card_layout.xml" value="0.20244565217391305" />
         <entry key="app/src/main/res/layout/dm.xml" value="0.16785714285714284" />
         <entry key="app/src/main/res/layout/filter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/home.xml" value="0.33" />
