@@ -10,5 +10,7 @@
     <color name="black_200">#323B44</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dark_grey">#737373</color>
+    <color name="orange_final">#FFB81C</color>
+    <color name="baby_blue">#D6ECF3</color>
+    <color name="dark_grey">#404040</color>
 </resources>
