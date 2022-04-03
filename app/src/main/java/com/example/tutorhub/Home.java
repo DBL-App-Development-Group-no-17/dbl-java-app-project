@@ -1,6 +1,7 @@
 package com.example.tutorhub;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,13 +17,18 @@ import android.widget.ToggleButton;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
+import com.google.android.gms.tasks.Task;
 
 public class Home extends AppCompatActivity {
 
@@ -61,21 +67,9 @@ public class Home extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null) {
-                        System.out.println("LAT: " + location.getLatitude());
-                        System.out.println("LON: " + location.getLongitude());
-                    }
-                }
-            });
-
-
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            getLocation();
         } else {
-
+            //Ask for location permission
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
         }
 
@@ -120,5 +114,22 @@ public class Home extends AppCompatActivity {
             }
         });*/
 
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    System.out.println("LAT: " + location.getLatitude());
+                    System.out.println("LON: " + location.getLongitude());
+                }
+            }
+        });
+    }
+
+    private void getDistance() {
+        //Location.distanceBetween();
     }
 }
