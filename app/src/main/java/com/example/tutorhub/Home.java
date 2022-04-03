@@ -1,27 +1,28 @@
 package com.example.tutorhub;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
+
+
 
     private RecyclerView courseRV;
     /*private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -29,22 +30,24 @@ public class Home extends AppCompatActivity {
 
     private ArrayList<CourseModel> courseModelArrayList;
 
+    DatabaseReference tutorsRef = mAuth.getReference("tutors");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         courseRV = findViewById(R.id.idRVCourse);
 
+
         // here we have created new array list and added data to it.
         courseModelArrayList = new ArrayList<>();
-        courseModelArrayList.add(new CourseModel("DSA in Java", 4, R.drawable.a));
-        courseModelArrayList.add(new CourseModel("Java Course", 3, R.drawable.b));
-        courseModelArrayList.add(new CourseModel("C++ COurse", 4, R.drawable.c));
-        courseModelArrayList.add(new CourseModel("DSA in C++", 4, R.drawable.a));
-        courseModelArrayList.add(new CourseModel("Kotlin for Android", 4, R.drawable.b));
-        courseModelArrayList.add(new CourseModel("Java for Android", 4, R.drawable.c));
-        courseModelArrayList.add(new CourseModel("HTML and CSS", 4, R.drawable.a));
+        courseModelArrayList.add(new CourseModel("DSA in Java", 4, R.drawable.logo_login));
+        courseModelArrayList.add(new CourseModel("Java Course", 3, R.drawable.logo_login));
+        courseModelArrayList.add(new CourseModel("C++ COurse", 4, R.drawable.logo_login));
+        courseModelArrayList.add(new CourseModel("DSA in C++", 4, R.drawable.logo_login));
+        courseModelArrayList.add(new CourseModel("Kotlin for Android", 4, R.drawable.logo_login));
+        courseModelArrayList.add(new CourseModel("Java for Android", 4, R.drawable.logo_login));
+        courseModelArrayList.add(new CourseModel("HTML and CSS", 4, R.drawable.logo_login));
 
 
         // we are initializing our adapter class and passing our arraylist to it.
