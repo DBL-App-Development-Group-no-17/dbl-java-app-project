@@ -1,8 +1,13 @@
 package com.example.tutorhub;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.location.Location;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +16,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,8 +76,8 @@ public class RegistrationPage extends AppCompatActivity {
         tutor = findViewById(R.id.toggle_tutor);
         CheckBox checkBox = findViewById(R.id.checkBox_loc);
 
-        Button logIn = findViewById(R.id.reg_button);
-        logIn.setOnClickListener(new View.OnClickListener() {
+        Button btnRegister = findViewById(R.id.reg_button);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean fine = true;
@@ -112,13 +124,14 @@ public class RegistrationPage extends AppCompatActivity {
                     checkBox.setError("Must be checked to create account");
                     fine = false;
                 }
+
                 ArrayList<Boolean> boolArr = new ArrayList<>();
                 boolArr.add(fine);
                 FirebaseDatabase.getInstance().getReference().child("usernames")
                         .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             String s = task.getResult().getValue().toString();
                             String[] ss = s.split(", ");
                             boolean matches = false;
@@ -168,6 +181,7 @@ public class RegistrationPage extends AppCompatActivity {
     }
 
     public String writeNewUser(List<String> users) {
+        LastLocation userLocation = new LastLocation(0.0,0.0);
         mDb = FirebaseDatabase.getInstance().getReference();
         User user;
         if (TextUtils.isEmpty(educationalInstitution.getText())){
@@ -177,7 +191,8 @@ public class RegistrationPage extends AppCompatActivity {
                     student.isChecked(),
                     tutor.isChecked(),
                     phoneNumber.getText().toString(),
-                    email.getText().toString());
+                    email.getText().toString(),
+                    userLocation);
         }
         else {
             user = new User(userName.getText().toString(),
@@ -187,7 +202,8 @@ public class RegistrationPage extends AppCompatActivity {
                     tutor.isChecked(),
                     phoneNumber.getText().toString(),
                     educationalInstitution.getText().toString(),
-                    email.getText().toString());
+                    email.getText().toString(),
+                    userLocation);
         }
 
 
