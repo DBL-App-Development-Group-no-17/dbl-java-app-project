@@ -125,6 +125,7 @@ public class Home extends AppCompatActivity {
                                 User curUser = user.getValue(User.class);
 
                                 System.out.println("FROM DATABASE");
+                                System.out.println(curUser.getTutorRole().getContactInf());
                                 System.out.println(curUser.location.latitude);
                                 System.out.println(curUser.location.longitude);
                             }

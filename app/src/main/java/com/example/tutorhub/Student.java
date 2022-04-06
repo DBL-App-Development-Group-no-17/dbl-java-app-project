@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Student extends UserRoles {
     /** variable declarations */
+    private String string = "test";
     private int radius;
     private List<String> tutorHistory = new ArrayList<>();
 

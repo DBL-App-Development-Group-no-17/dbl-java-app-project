@@ -12,9 +12,10 @@ public class Tutor extends UserRoles{
 
 
     /** variable declerations */
-    private String contactInfo;
-    private List<String> studentHistory = new ArrayList<>();
+    private String contactInfo = "emailaddress";
     private int rating = 0;
+    private List<String> studentHistory = new ArrayList<>();
+
 
     /**
      * adds rating to tutor

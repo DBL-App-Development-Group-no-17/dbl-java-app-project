@@ -31,9 +31,9 @@ public class User {
         this.email = email;
         this.location = location;
     }
-    User(){
-
-    }
+//    User(){
+//
+//    }
 
     User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber,
          String university, String email, LastLocation location) {
