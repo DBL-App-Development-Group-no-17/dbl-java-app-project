@@ -14,7 +14,7 @@ public class Tutor extends UserRoles{
     /** variable declerations */
     private String contactInfo;
     private List<String> studentHistory = new ArrayList<>();
-    private float rating = -1;
+    private int rating = 0;
 
     /**
      * adds rating to tutor
@@ -28,7 +28,7 @@ public class Tutor extends UserRoles{
             this.rating = rating;
         }
         else{
-            this.rating = (float) (this.rating + rating)/2;
+            this.rating = (int) (this.rating + rating)/2;
         }
     }
 

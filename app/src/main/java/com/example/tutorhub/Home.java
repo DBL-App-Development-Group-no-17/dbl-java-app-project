@@ -58,16 +58,16 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
-                    if (coarseLocationGranted != null && coarseLocationGranted) {
-                        // Only approximate location access granted.
-                    } else {
-                        // No location access granted.
-                        Toast.makeText(this, "TutorHub has no location permissions!", Toast.LENGTH_LONG);
-                    }
-                }
-        );
+//        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+//                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
+//                    if (coarseLocationGranted != null && coarseLocationGranted) {
+//                        // Only approximate location access granted.
+//                    } else {
+//                        // No location access granted.
+//                        Toast.makeText(this, "TutorHub has no location permissions!", Toast.LENGTH_LONG);
+//                    }
+//                }
+//        );
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this,
