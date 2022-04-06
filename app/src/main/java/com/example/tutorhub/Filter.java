@@ -199,7 +199,15 @@ public class Filter extends AppCompatActivity {
         saveFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Home.class));
+                Intent intent = new Intent(getApplicationContext(), Home.class);
+                intent.putExtra("sortingCriteria", sortingCriteria);
+                intent.putExtra("rangeValue", rangeValue);
+                intent.putExtra("mathIsPresent", math.isChecked());
+                intent.putExtra("physicsIsPresent", physics.isChecked());
+                intent.putExtra("chemistryIsPresent", chemistry.isChecked());
+                intent.putExtra("dataStructuresIsPresent", data_structures.isChecked());
+                intent.putExtra("englishIsPresent", english.isChecked());
+                startActivity(intent);
             }
         });
 

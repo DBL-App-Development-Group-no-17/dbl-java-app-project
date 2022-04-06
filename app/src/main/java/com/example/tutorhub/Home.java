@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -36,6 +37,39 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity {
+
+//    Task<DataSnapshot> database = FirebaseDatabase.getInstance().getReference().child("users").get().addOnCompleteListener(
+//            new OnCompleteListener<DataSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        String s = task.getResult().getValue().toString();
+//                        String[] ss = s.split(", ");
+//                    }
+//                }
+//            });
+
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+    ValueEventListener query = reference.child("users").orderByChild("tutor").equalTo(true)
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        // dataSnapshot is the "issue" node with all children with id 0
+                        for (DataSnapshot user : dataSnapshot.getChildren()) {
+                            User curUser = user.getValue(User.class);
+
+                            System.out.println(curUser.getUsername());
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    int x = 1;
+                }
+            });
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -102,47 +136,6 @@ public class Home extends AppCompatActivity {
                         int x = 1;
                     }
                 });
-
-        /*Button info = findViewById(R.id.info_button);
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Info.class));
-            }
-        });*/
-
-        /*Button filter = findViewById(R.id.filter_button);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Filter.class));
-            }
-        });*/
-
-        /*Button dm = findViewById(R.id.dm_button);
-        dm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), DM.class));
-            }
-        });*/
-
-        /*Button home = findViewById(R.id.home_button);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Home.class));
-            }
-        });*/
-
-        /*Button map = findViewById(R.id.map_button);
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Map.class));
-            }
-        });*/
-
     }
 
     @SuppressLint("MissingPermission")
@@ -161,5 +154,31 @@ public class Home extends AppCompatActivity {
 
     private void getDistance() {
         //Location.distanceBetween();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String sortingCriteria;
+        Double rangeValue;
+        Boolean mathIsPresent;
+        Boolean physicsIsPresent;
+        Boolean chemistryIsPresent;
+        Boolean dataStructuresIsPresent;
+        Boolean englishIsPresent;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            sortingCriteria = extras.getString("sortingCriteria");
+            rangeValue = extras.getDouble("rangeValue");
+            mathIsPresent = extras.getBoolean("mathIsPresent");
+            physicsIsPresent = extras.getBoolean("physicsIsPresent");
+            chemistryIsPresent = extras.getBoolean("chemistryIsPresent");
+            dataStructuresIsPresent = extras.getBoolean("dataStructuresIsPresent");
+            englishIsPresent = extras.getBoolean("englishIsPresent");
+
+
+        }
     }
 }
