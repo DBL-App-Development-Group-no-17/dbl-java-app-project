@@ -40,7 +40,15 @@ public class ProfilePage extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
 
-        databaseReference.child("users").child("test").get()
+        String curUsername = "";
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            curUsername = extras.getString("username");
+        }
+
+        System.out.println(curUsername);
+        databaseReference.child("users").child("Student").get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

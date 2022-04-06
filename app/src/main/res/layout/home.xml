@@ -7,72 +7,26 @@
     android:layout_height="match_parent"
     android:background="@color/black_200" >
 
-    <Button
-        android:id="@+id/search_button_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginEnd="297dp"
-        android:layout_marginRight="297dp"
-        android:layout_marginBottom="523dp"
-        android:layout_weight="1"
-        android:text="Search"
-        android:textColor="@color/black_200"
-        app:backgroundTint="#FF9800"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/home_text_champion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="184dp"
         android:layout_marginRight="184dp"
-        android:layout_marginBottom="668dp"
         android:text="Hi Champion!"
         android:textColor="#FFFFFF"
         android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="375dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="571dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_text_champion">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/home_search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:hint="Search a tutor or subject" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/filter_button"
         android:layout_width="wrap_content"
         android:layout_height="48sp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:height="40sp"
@@ -80,6 +34,7 @@
         android:text="Filter"
         android:textColor="@color/black_200"
         app:backgroundTint="#FF9800"
+        app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,31 +44,27 @@
         android:layout_height="48dp"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="17dp"
         android:layout_marginRight="17dp"
-        android:layout_marginBottom="35dp"
         android:height="40sp"
         android:text="i"
         android:textColor="@color/black_200"
         app:backgroundTint="#FF9800"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
         app:layout_constraintEnd_toStartOf="@+id/filter_button"
         app:layout_constraintStart_toEndOf="@+id/home_text_champion"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scroll_view_home"
-        android:layout_width="348dp"
-        android:layout_height="479dp"
-        android:layout_marginTop="17dp"
+        android:layout_width="354dp"
+        android:layout_height="588dp"
         android:layout_marginBottom="27dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_button_home"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout

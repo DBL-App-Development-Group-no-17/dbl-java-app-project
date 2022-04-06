@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.IDNA;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -67,6 +68,7 @@ public class Home extends AppCompatActivity {
                     if (dataSnapshot.exists()) {
                         // dataSnapshot is the "issue" node with all children with id 0
                         for (DataSnapshot user : dataSnapshot.getChildren()) {
+                            System.out.println("USER:" + user.toString());
                             User curUser = user.getValue(User.class);
 
                             System.out.println(curUser.getUsername());
@@ -96,11 +98,32 @@ public class Home extends AppCompatActivity {
                 }
             });
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        Button btnInfo = findViewById(R.id.home_info_button);
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
+               //intent.putExtra("username", curUser.getUsername());
+               startActivity(intent);
+           }
+       });
+
+        Button btnFilter = findViewById(R.id.filter_button);
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Filter.class);
+                startActivity(intent);
+            }
+        });
 
         String userEmail;
 
@@ -148,8 +171,6 @@ public class Home extends AppCompatActivity {
 
                                 System.out.println("FROM DATABASE");
                                 System.out.println(curUser.getTutorRole().getContactInf());
-                                System.out.println(curUser.getLocation().latitude);
-                                System.out.println(curUser.getLocation().longitude);
                             }
 
                             LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
@@ -192,18 +213,18 @@ public class Home extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void getLocation() {
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    System.out.println("FROM DEVICE");
-                    System.out.println("LAT: " + location.getLatitude());
-                    System.out.println("LON: " + location.getLongitude());
-                    curUser.setLocation(location);
-                }
-                saveUser(curUser);
-            }
-        });
+//        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                if (location != null) {
+//                    System.out.println("FROM DEVICE");
+//                    System.out.println("LAT: " + location.getLatitude());
+//                    System.out.println("LON: " + location.getLongitude());
+//                    curUser.setLocation(location);
+//                }
+//                saveUser(curUser);
+//            }
+//        });
     }
 
     private void saveUser(User user) {
