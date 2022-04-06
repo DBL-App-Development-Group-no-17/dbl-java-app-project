@@ -102,14 +102,38 @@
         app:layout_constraintStart_toEndOf="@+id/home_text_champion"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVCourse"
-        android:layout_width="414dp"
-        android:layout_height="504dp"
-        android:layout_marginTop="19dp"
+    <ScrollView
+        android:id="@+id/scroll_view_home"
+        android:layout_width="348dp"
+        android:layout_height="479dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="27dp"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_button_home" />
+        app:layout_constraintTop_toBottomOf="@+id/search_button_home"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:id="@+id/layout_view_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:orientation="vertical">
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:cardElevation="10dp"-->
+            <!--                app:cardCornerRadius="20dp"-->
+            <!--                android:layout_margin="10dp"-->
+            <!--                app:cardBackgroundColor="@color/white"-->
+            <!--                app:cardMaxElevation="12dp"-->
+            <!--                app:cardPreventCornerOverlap="true"-->
+            <!--                app:cardUseCompatPadding="true"-->
+            <!--            />-->
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
