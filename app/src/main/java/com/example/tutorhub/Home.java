@@ -29,6 +29,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity {
 
@@ -74,6 +79,29 @@ public class Home extends AppCompatActivity {
             getLocation();
         }
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        ValueEventListener query = reference.child("users").orderByChild("tutor").equalTo(true)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // dataSnapshot is the "issue" node with all children with id 0
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                User curUser = user.getValue(User.class);
+
+                                System.out.println("FROM DATABASE");
+                                System.out.println(curUser.location.latitude);
+                                System.out.println(curUser.location.longitude);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        int x = 1;
+                    }
+                });
 
         /*Button info = findViewById(R.id.info_button);
         info.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +151,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
+                    System.out.println("FROM DEVICE");
                     System.out.println("LAT: " + location.getLatitude());
                     System.out.println("LON: " + location.getLongitude());
                 }

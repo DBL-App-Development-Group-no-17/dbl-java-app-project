@@ -14,7 +14,7 @@ public class User {
     private String university;
     private String phoneNumber;
     private String email;
-    private LastLocation location;
+    public LastLocation location;
 
 
     /**

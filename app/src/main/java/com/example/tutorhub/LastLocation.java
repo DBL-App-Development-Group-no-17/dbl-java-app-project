@@ -8,4 +8,9 @@ public class LastLocation {
         this.latitude = lat;
         this.longitude = lon;
     }
+
+    LastLocation() {
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+    }
 }
