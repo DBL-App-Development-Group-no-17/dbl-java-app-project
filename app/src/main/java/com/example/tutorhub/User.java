@@ -14,7 +14,7 @@ public class User {
     private String university;
     private String phoneNumber;
     private String email;
-    public LastLocation location;
+    private LastLocation location;
 
 
     /**
@@ -31,9 +31,9 @@ public class User {
         this.email = email;
         this.location = location;
     }
-//    User(){
-//
-//    }
+    User(){
+
+    }
 
     User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber,
          String university, String email, LastLocation location) {
@@ -112,6 +112,23 @@ public class User {
     }
 
     /**
+     * Returns location of user
+     * @return {@code this.location}
+     */
+    public LastLocation getLocation() {
+        return this.location;
+    }
+
+    /**
+     * Sets the location of user
+     * @param location to be set
+     * @post {@code this.location = location}
+     */
+    public void setLocation(Location location) {
+        LastLocation newLocation = new LastLocation(location.getLatitude(), location.getLongitude());
+        this.location = newLocation;
+    }
+    /**
      * Adds tutor role to user
      * @param role role to add
      * @throws IllegalArgumentException if user already has role
@@ -154,5 +171,9 @@ public class User {
      * @return studentRole
      */
     public Tutor getTutorRole() { return tutorRole; }
+
+    public String getUniversity() {
+        return this.university;
+    }
 
 }

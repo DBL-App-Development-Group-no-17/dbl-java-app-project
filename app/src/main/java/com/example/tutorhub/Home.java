@@ -73,9 +73,7 @@ public class Home extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
 
-    private final int REQUEST_ACCESS_COARSE_LOCATION = 1;
-
-
+    public User curUser;
 
     private ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -92,16 +90,27 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-//        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-//                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
-//                    if (coarseLocationGranted != null && coarseLocationGranted) {
-//                        // Only approximate location access granted.
-//                    } else {
-//                        // No location access granted.
-//                        Toast.makeText(this, "TutorHub has no location permissions!", Toast.LENGTH_LONG);
-//                    }
-//                }
-//        );
+        String userEmail;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userEmail = extras.getString("email");
+            ValueEventListener query = reference.child("users").orderByChild("email").equalTo(userEmail)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                curUser = dataSnapshot.getValue(User.class);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            int x = 1;
+                        }
+                    });
+        }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this,
@@ -126,8 +135,8 @@ public class Home extends AppCompatActivity {
 
                                 System.out.println("FROM DATABASE");
                                 System.out.println(curUser.getTutorRole().getContactInf());
-                                System.out.println(curUser.location.latitude);
-                                System.out.println(curUser.location.longitude);
+                                System.out.println(curUser.getLocation().latitude);
+                                System.out.println(curUser.getLocation().longitude);
                             }
                         }
                     }
@@ -148,9 +157,15 @@ public class Home extends AppCompatActivity {
                     System.out.println("FROM DEVICE");
                     System.out.println("LAT: " + location.getLatitude());
                     System.out.println("LON: " + location.getLongitude());
+                    curUser.setLocation(location);
                 }
+                saveUser(curUser);
             }
         });
+    }
+
+    private void saveUser(User user) {
+        reference.child("users").child(user.getUsername()).setValue(user);
     }
 
     private void getDistance() {
