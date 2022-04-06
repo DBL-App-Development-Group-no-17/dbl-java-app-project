@@ -1,5 +1,7 @@
 package com.example.tutorhub;
 
+import android.location.Location;
+
 import java.util.List;
 
 public class User {
@@ -12,13 +14,14 @@ public class User {
     private String university;
     private String phoneNumber;
     private String email;
+    public LastLocation location;
 
 
     /**
      * Constructor
      */
     User(String username, String name, String password, boolean student, boolean tutor,
-         String phoneNumber, String email) {
+         String phoneNumber, String email, LastLocation location) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -26,13 +29,14 @@ public class User {
         if (tutor) { this.tutorRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.location = location;
     }
     User(){
 
     }
 
     User(String username, String name, String password, boolean student, boolean tutor, String phoneNumber,
-         String university, String email) {
+         String university, String email, LastLocation location) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -41,6 +45,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.university = university;
         this.email = email;
+        this.location = location;
     }
 
     /**
