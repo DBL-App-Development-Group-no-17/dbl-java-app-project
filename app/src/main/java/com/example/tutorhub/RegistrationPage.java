@@ -181,7 +181,7 @@ public class RegistrationPage extends AppCompatActivity {
     }
 
     public String writeNewUser(List<String> users) {
-        LastLocation userLocation = new LastLocation(0.0,0.0);
+        LastLocation userLocation = new LastLocation(1.0,1.0);
         mDb = FirebaseDatabase.getInstance().getReference();
         User user;
         if (TextUtils.isEmpty(educationalInstitution.getText())){
@@ -210,6 +210,5 @@ public class RegistrationPage extends AppCompatActivity {
         mDb.child("users").child(user.getUsername()).setValue(user);
         mDb.child("usernames").setValue(users);
         return user.getEmail();
-
     }
 }

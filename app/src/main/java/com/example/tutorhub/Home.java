@@ -71,6 +71,7 @@ public class Home extends AppCompatActivity {
         } else {
             //Ask for location permission
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
+            getLocation();
         }
 
 
