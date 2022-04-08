@@ -181,8 +181,20 @@ public class Home extends AppCompatActivity {
                                 TextView tx = new TextView(context);
                                 tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 tx.setText(tutor.getName());
+                                TextView uni = new TextView(context);
+                                uni.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                uni.setText(tutor.getUniversity());
+                                TextView phone = new TextView(context);
+                                phone.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                phone.setText("Contact: " + tutor.getPhoneNumber());
+                                TextView email = new TextView(context);
+                                email.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                email.setText("Email: " + tutor.getEmail());
                                 CardView card = new CardView(context);
                                 tx.setPadding(10, 5, 10, 5);
+                                uni.setPadding(10, 5, 10, 5);
+                                phone.setPadding(10, 5, 10, 5);
+                                email.setPadding(10, 5, 10, 5);
 
                                 card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 card.setCardElevation(10);
@@ -195,6 +207,9 @@ public class Home extends AppCompatActivity {
                                 lay.setOrientation(LinearLayout.VERTICAL);
                                 lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 lay.addView(tx);
+                                lay.addView(uni);
+                                lay.addView(phone);
+                                lay.addView(email);
                                 ((LinearLayout) layout).addView(card);
                                 card.addView(lay);
                             }
