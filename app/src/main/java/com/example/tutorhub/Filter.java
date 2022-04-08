@@ -18,9 +18,12 @@ import java.util.List;
 
 // to implement: Save Filters, subject addition, sorting strategy
 public class Filter extends AppCompatActivity {
-    String sortingCriteria = "";
+    String sortingCriteria = "DISTANCE";
     List courses = new ArrayList();
     double rangeValue;
+    double ratingValue;
+
+    final double MAX_RANGE = 100000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +49,19 @@ public class Filter extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (distance.isChecked() == true) {
+                if (distance.isChecked()) {
                     distance.toggle();
                 }
-                if (rating.isChecked() == true) {
+                if (rating.isChecked()) {
                     rating.toggle();
                 }
 
+                rangeValue = MAX_RANGE;
+                ratingValue = 0;
                 sortingCriteria = "";
                 courses.clear();
                 startActivity(new Intent(getApplicationContext(), Home.class));
+                finish();
             }
         });
 
@@ -63,30 +69,32 @@ public class Filter extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (distance.isChecked() == true) {
+                if (distance.isChecked()) {
                     distance.toggle();
                 }
-                if (rating.isChecked() == true) {
+                if (rating.isChecked()) {
                     rating.toggle();
                 }
-                if (math.isChecked() == true) {
+                if (math.isChecked()) {
                     math.toggle();
                 }
-                if (english.isChecked() == true) {
+                if (english.isChecked()) {
                     english.toggle();
                 }
-                if (physics.isChecked() == true) {
+                if (physics.isChecked()) {
                     physics.toggle();
                 }
-                if (chemistry.isChecked() == true) {
+                if (chemistry.isChecked()) {
                     chemistry.toggle();
                 }
-                if (data_structures.isChecked() == true) {
+                if (data_structures.isChecked()) {
                     data_structures.toggle();
                 }
-                range.setProgress(50);
 
-                sortingCriteria = "";
+                range.setProgress(50);
+                rangeValue = MAX_RANGE;
+                ratingValue = 0;
+                sortingCriteria = "DISTANCE";
                 courses.clear();
             }
         });
@@ -95,7 +103,7 @@ public class Filter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sortingCriteria = "DISTANCE";
-                if (rating.isChecked() == true) {
+                if (rating.isChecked()) {
                     rating.toggle();
                     progress.setText("");
                 }
@@ -106,7 +114,7 @@ public class Filter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sortingCriteria = "RATING";
-                if (distance.isChecked() == true) {
+                if (distance.isChecked()) {
                     distance.toggle();
                     progress.setText("");
                 }
@@ -128,7 +136,7 @@ public class Filter extends AppCompatActivity {
                     rangeValue = i * 0.1;
                 } else if (sortingCriteria == "RATING") {
                     progress.setText(String.valueOf(df.format(i * 0.05)));
-                    rangeValue = i * 0.2;
+                    ratingValue = i * 0.2;
                 }
             }
 
@@ -143,7 +151,7 @@ public class Filter extends AppCompatActivity {
         math.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (math.isChecked() == true) {
+                if (math.isChecked()) {
                     courses.add("MATH");
                 } else {
                     courses.remove("MATH");
@@ -154,7 +162,7 @@ public class Filter extends AppCompatActivity {
         english.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (english.isChecked() == true) {
+                if (english.isChecked()) {
                     courses.add("ENGLISH");
                 } else {
                     courses.remove("ENGLISH");
@@ -165,7 +173,7 @@ public class Filter extends AppCompatActivity {
         physics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (physics.isChecked() == true) {
+                if (physics.isChecked()) {
                     courses.add("PHYSICS");
                 } else {
                     courses.remove("PHYSICS");
@@ -176,7 +184,7 @@ public class Filter extends AppCompatActivity {
         chemistry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (chemistry.isChecked() == true) {
+                if (chemistry.isChecked()) {
                     courses.add("CHEMISTRY");
                 } else {
                     courses.remove("CHEMISTRY");
@@ -187,7 +195,7 @@ public class Filter extends AppCompatActivity {
         data_structures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (data_structures.isChecked() == true) {
+                if (data_structures.isChecked()) {
                     courses.add("DATA_STRUCTURES");
                 } else {
                     courses.remove("DATA_STRUCTURES");
@@ -202,12 +210,14 @@ public class Filter extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Home.class);
                 intent.putExtra("sortingCriteria", sortingCriteria);
                 intent.putExtra("rangeValue", rangeValue);
+                intent.putExtra("ratingValue", ratingValue);
                 intent.putExtra("mathIsPresent", math.isChecked());
                 intent.putExtra("physicsIsPresent", physics.isChecked());
                 intent.putExtra("chemistryIsPresent", chemistry.isChecked());
                 intent.putExtra("dataStructuresIsPresent", data_structures.isChecked());
                 intent.putExtra("englishIsPresent", english.isChecked());
                 startActivity(intent);
+                finish();
             }
         });
 
