@@ -9,6 +9,7 @@ import android.icu.text.IDNA;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,36 +126,26 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        String userEmail;
+        String userEmail = null;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userEmail = extras.getString("email");
-            ValueEventListener query = reference.child("users").orderByChild("email").equalTo(userEmail)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                curUser = dataSnapshot.getValue(User.class);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            int x = 1;
-                        }
-                    });
+            ;
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getLocation();
+
         } else {
             //Ask for location permission
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
-            getLocation();
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Please allow TutorHub to use location", Toast.LENGTH_LONG).show();
+            }
         }
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -165,12 +156,12 @@ public class Home extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             // dataSnapshot is the "issue" node with all children with id 0
-                            for (DataSnapshot user : dataSnapshot.getChildren()) {
-                                User curUser = user.getValue(User.class);
-                                tutorList.add(curUser);
+                            for (DataSnapshot tutor : dataSnapshot.getChildren()) {
+                                User curTutor = tutor.getValue(User.class);
+                                tutorList.add(curTutor);
 
                                 System.out.println("FROM DATABASE");
-                                System.out.println(curUser.getTutorRole().getContactInf());
+                                System.out.println(curTutor.getTutorRole().getContactInf());
                             }
 
                             LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
@@ -207,24 +198,45 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
+        //getCurrentUser(userEmail);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ValueEventListener query1 = ref.child("users").orderByChild("email").equalTo(userEmail)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                curUser = user.getValue(User.class);
+                            }
 
+                        }
+                        getLocation();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        int x = 1;
+                    }
+                });
+    }
+
+    private void getCurrentUser(String userEmail) {
 
     }
 
     @SuppressLint("MissingPermission")
-    private void getLocation() {
-//        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-//            @Override
-//            public void onSuccess(Location location) {
-//                if (location != null) {
-//                    System.out.println("FROM DEVICE");
-//                    System.out.println("LAT: " + location.getLatitude());
-//                    System.out.println("LON: " + location.getLongitude());
-//                    curUser.setLocation(location);
-//                }
-//                saveUser(curUser);
-//            }
-//        });
+    private synchronized void getLocation() {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    System.out.println("FROM DEVICE");
+                    System.out.println("LAT: " + location.getLatitude());
+                    System.out.println("LON: " + location.getLongitude());
+                    curUser.setLocation(location.getLatitude(), location.getLongitude());
+                }
+                saveUser(curUser);
+            }
+        });
     }
 
     private void saveUser(User user) {
