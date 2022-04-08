@@ -108,13 +108,13 @@ public class Home extends AppCompatActivity {
 
         Button btnInfo = findViewById(R.id.home_info_button);
         btnInfo.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
-               //intent.putExtra("username", curUser.getUsername());
-               startActivity(intent);
-           }
-       });
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
+                //intent.putExtra("username", curUser.getUsername());
+                startActivity(intent);
+            }
+        });
 
         Button btnFilter = findViewById(R.id.filter_button);
         btnFilter.setOnClickListener(new View.OnClickListener() {

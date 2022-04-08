@@ -121,11 +121,12 @@ public class User {
 
     /**
      * Sets the location of user
-     * @param location to be set
+     * @param lat latitude to be set
+     * @param lon longitude to be set
      * @post {@code this.location = location}
      */
-    public void setLocation(Location location) {
-        LastLocation newLocation = new LastLocation(location.getLatitude(), location.getLongitude());
+    public void setLocation(double lat, double lon) {
+        LastLocation newLocation = new LastLocation(lat, lon);
         this.location = newLocation;
     }
     /**
@@ -172,6 +173,10 @@ public class User {
      */
     public Tutor getTutorRole() { return tutorRole; }
 
+    /**
+     *
+     * @return university
+     */
     public String getUniversity() {
         return this.university;
     }
