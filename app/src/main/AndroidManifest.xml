@@ -26,6 +26,7 @@
         <activity android:name=".Map" android:exported="true"></activity>
         <activity android:name=".Filter" android:exported="true"></activity>
         <activity android:name=".ProfilePage" android:exported="true"></activity>
+        <activity android:name=".tutorProfilePage" android:exported="true"></activity>
     </application>
 
 </manifest>

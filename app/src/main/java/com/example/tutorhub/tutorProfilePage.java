@@ -1,18 +1,18 @@
 package com.example.tutorhub;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.ViewGroup.LayoutParams;
-import android.app.AlertDialog;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,28 +27,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.net.Authenticator;
 import java.util.ArrayList;
 
-/**
- * Profile page for user
- */
-public class ProfilePage extends AppCompatActivity {
+public class tutorProfilePage extends AppCompatActivity {
     Context context = this;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_page);
+        setContentView(R.layout.tutor_profile_page);
         Context context = this;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference();
         Bundle extras = getIntent().getExtras();
         String value = "";
         if(extras != null) {
             value = extras.getString("username");
             System.out.println(value + "sui");
         }
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference();
 
         databaseReference.child("users").child(value).get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -60,28 +55,45 @@ public class ProfilePage extends AppCompatActivity {
                         else{
                             /** User from database */
                             User user = task.getResult().getValue(User.class);
+                            //user.getTutorRole().setSubjectTag(Subject.English);
 
                             /** variables for page */
-                            TextView name = findViewById(R.id.usersName);
-                            TextView email = findViewById(R.id.usersEmail);
-                            TextView phoneNr = findViewById(R.id.phoneNumber);
-                            LinearLayout layout = (LinearLayout) findViewById(R.id.linLayout);
+                            TextView name = findViewById(R.id.usersNametut);
+                            TextView email = findViewById(R.id.usersEmailtut);
+                            TextView phoneNr = findViewById(R.id.phoneNumbertut);
+                            LinearLayout layout = (LinearLayout) findViewById(R.id.linLayouttut);
+                            CheckBox[] checkBoxes = new CheckBox[5];
+                            checkBoxes[0] = findViewById(R.id.checkBox);
+                            checkBoxes[1] = findViewById(R.id.checkBox2);
+                            checkBoxes[2] = findViewById(R.id.checkBox3);
+                            checkBoxes[3] = findViewById(R.id.checkBox4);
+                            checkBoxes[4] = findViewById(R.id.checkBox5);
+                            if(!user.getTutorRole().getSubjectTags().isEmpty()){
+                                for(Subject x: user.getTutorRole().getSubjectTags()){
+                                    for(int i = 0; i != checkBoxes.length; i ++){
+                                        if(checkBoxes[i].getText().toString().equalsIgnoreCase(x.toString())){
+                                            checkBoxes[i].setChecked(true);
+                                        }
+                                    }
+                                }
+                            }
+
 
                             /** set correct vaiable */
                             name.setText(user.getName() + " ("+user.getUsername()+")");
                             email.setText(user.getEmail());
                             phoneNr.setText(user.getPhoneNumber());
-                            System.out.println(user.getStudentRole().getTutorHistory().isEmpty());
+                            System.out.println(user.getTutorRole().getStudentHistory().isEmpty());
 
                             /** Tutor History cards */
-                            if(user.getStudentRole().getTutorHistory().size() == 0){
+                            if(user.getTutorRole().getStudentHistory().size() == 0){
                                 TextView tx = new TextView(context);
-                                tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-                                tx.setText("No Tutor History");
+                                tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                tx.setText("No Student History");
                                 tx.setPadding(10,5,10,5);
 
                                 CardView card = new CardView(context);
-                                card.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+                                card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 card.setCardElevation(10);
                                 card.setRadius(20);
                                 card.setPreventCornerOverlap(true);
@@ -90,7 +102,7 @@ public class ProfilePage extends AppCompatActivity {
 
                                 LinearLayout lay = new LinearLayout(context);
                                 lay.setOrientation(LinearLayout.VERTICAL);
-                                lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+                                lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 lay.addView(tx);
                                 ((LinearLayout) layout).addView(card);
                                 card.addView(lay);
@@ -98,8 +110,8 @@ public class ProfilePage extends AppCompatActivity {
 
                             }
                             else {
-                                ArrayList<User> tutors = new ArrayList<>();
-                                for(String username: user.getStudentRole().getTutorHistory()) {
+                                ArrayList<User> students = new ArrayList<>();
+                                for(String username: user.getTutorRole().getStudentHistory()) {
                                     databaseReference.child("users").child(username).get()
                                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                                 @Override
@@ -108,45 +120,60 @@ public class ProfilePage extends AppCompatActivity {
                                                         User temp = task.getResult().getValue(User.class);
                                                         System.out.println(task.getResult().getValue());
                                                         System.out.println(temp.getName());
-                                                        tutors.add(temp);
-                                                        System.out.println(tutors.size());
+                                                        students.add(temp);
+                                                        System.out.println(students.size());
                                                     }
-                                                    for (User tutor : tutors) {
+                                                    for (User tutor : students) {
                                                         TextView tx = new TextView(context);
-                                                        tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                        tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                                         tx.setText(tutor.getName());
                                                         CardView card = new CardView(context);
                                                         tx.setPadding(10, 5, 10, 5);
 
-                                                        card.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                        card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                                         card.setCardElevation(10);
                                                         card.setRadius(20);
                                                         card.setPreventCornerOverlap(true);
                                                         card.setUseCompatPadding(true);
-                                                        card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                        card.setCardBackgroundColor(getResources().getColor(R.color.dark_grey));
 
                                                         LinearLayout lay = new LinearLayout(context);
                                                         lay.setOrientation(LinearLayout.VERTICAL);
-                                                        lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                        lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                                         lay.addView(tx);
                                                         ((LinearLayout) layout).addView(card);
                                                         card.addView(lay);
-                                                        tutors.remove(tutor);
+                                                        students.remove(tutor);
                                                     }
 
                                                 }
                                             });
-
-
-
-
-
                                 }
 
                             }
+                            TextView save = findViewById(R.id.SaveTexttut);
+                            save.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(!user.getTutorRole().getSubjectTags().isEmpty()){
+                                        user.getTutorRole().emptyTags();
+                                    }
+                                    for(int i = 0; i != checkBoxes.length; i++) {
+                                        if(checkBoxes[i].isChecked()) {
+                                            for(Subject x: Subject.values()){
+                                                if(checkBoxes[i].getText().toString().equalsIgnoreCase(x.toString())){
+                                                    user.getTutorRole().setSubjectTag(x);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(user.getUsername()).setValue(user);
+                                }
+                            });
+
                             /** variables for dialog view */
 
-                            TextView resetPass = findViewById(R.id.textNewPass);
+                            TextView resetPass = findViewById(R.id.textNewPasstut);
                             LayoutInflater li = LayoutInflater.from(context);
                             View newPassDialog = li.inflate(R.layout.new_password_dialog, null);
                             AlertDialog.Builder alert = new AlertDialog.Builder(context);
@@ -215,7 +242,7 @@ public class ProfilePage extends AppCompatActivity {
 
                     }
                 });
-        TextView logOut = findViewById(R.id.logoutTXT);
+        TextView logOut = findViewById(R.id.logoutTXTtut);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -223,6 +250,8 @@ public class ProfilePage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
+
+
 
 //        //User user = getIntent().getParcelableExtra("user");
 //        User user = new User("username", "Firstname Surname", "password", true,

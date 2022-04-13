@@ -121,8 +121,13 @@ public class Home extends AppCompatActivity {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
-                //intent.putExtra("username", curUser.getUsername());
+                Intent intent;
+                if (curUser.isTutor()) {
+                    intent = new Intent(getApplicationContext(), tutorProfilePage.class);
+                } else {
+                    intent = new Intent(getApplicationContext(), ProfilePage.class);
+                }
+                intent.putExtra("username", curUser.getUsername());
                 startActivity(intent);
             }
         });
@@ -140,7 +145,7 @@ public class Home extends AppCompatActivity {
         if (extras != null) {
             userEmail = extras.getString("email");
 
-            sortingCriteria = extras.getString("sortingCriteria");
+            sortingCriteria = "";//extras.getString("sortingCriteria");
             rangeValue = extras.getDouble("rangeValue");
             ratingValue = extras.getDouble("ratingValue");
             mathIsPresent = extras.getBoolean("mathIsPresent");
@@ -164,7 +169,6 @@ public class Home extends AppCompatActivity {
                 Toast.makeText(this, "Please allow TutorHub to use location", Toast.LENGTH_LONG).show();
             }
         }
-
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();

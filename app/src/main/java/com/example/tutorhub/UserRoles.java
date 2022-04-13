@@ -3,7 +3,7 @@ package com.example.tutorhub;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRoles {
+public abstract class UserRoles {
     /** variable declarations */
     private List<Subject> subjectTags = new ArrayList<>();
 
@@ -27,6 +27,11 @@ public class UserRoles {
     public List<Subject> getSubjectTags(){
         return subjectTags;
     }
+
+    /**
+     * delete subject tags
+     */
+    public void emptyTags() {subjectTags.clear();}
 
 
 }
