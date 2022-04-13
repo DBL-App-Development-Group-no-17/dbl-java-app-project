@@ -22,6 +22,7 @@ public class Filter extends AppCompatActivity {
     List courses = new ArrayList();
     double rangeValue;
     double ratingValue;
+    String userEmail;
 
     final double MAX_RANGE = 100000;
 
@@ -29,6 +30,12 @@ public class Filter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filter);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userEmail = extras.getString("email");
+        }
+
 
         TextView cancel = findViewById(R.id.cancel_button);
         TextView reset = findViewById(R.id.reset_button);
@@ -208,6 +215,7 @@ public class Filter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Home.class);
+                intent.putExtra("email", userEmail);
                 intent.putExtra("sortingCriteria", sortingCriteria);
                 intent.putExtra("rangeValue", rangeValue);
                 intent.putExtra("ratingValue", ratingValue);

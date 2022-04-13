@@ -45,6 +45,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Home extends AppCompatActivity {
     Context context = this;
@@ -136,16 +137,16 @@ public class Home extends AppCompatActivity {
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Filter.class);
+                Intent intent = new Intent(getApplicationContext(), Filter.class).putExtra("email", curUser.getEmail());
                 startActivity(intent);
             }
         });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            userEmail = extras.getString("email");
+            userEmail = extras.getString("email").toLowerCase();
 
-            sortingCriteria = "";//extras.getString("sortingCriteria");
+            sortingCriteria = extras.getString("sortingCriteria");
             rangeValue = extras.getDouble("rangeValue");
             ratingValue = extras.getDouble("ratingValue");
             mathIsPresent = extras.getBoolean("mathIsPresent");
@@ -209,10 +210,10 @@ public class Home extends AppCompatActivity {
                                                     tx.setText(tutor.getName());
                                                     TextView uni = new TextView(context);
                                                     uni.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                    uni.setText(tutor.getUniversity());
+                                                    uni.setText("University: " + tutor.getUniversity());
                                                     TextView phone = new TextView(context);
                                                     phone.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                    phone.setText("Contact: " + tutor.getPhoneNumber());
+                                                    phone.setText("Phone: " + tutor.getPhoneNumber());
                                                     TextView email = new TextView(context);
                                                     email.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                                     email.setText("Email: " + tutor.getEmail());
@@ -230,8 +231,8 @@ public class Home extends AppCompatActivity {
                                                     Location loc2 = new Location("");
                                                     loc2.setLatitude(tutor.getLocation().latitude);
                                                     loc2.setLongitude(tutor.getLocation().longitude);
-                                                    int distance = (int) loc1.distanceTo(loc2) / 1000;
-                                                    location.setText(distance + " km away");
+                                                    float distance = loc1.distanceTo(loc2) / 1000;
+                                                    location.setText(String.format("%.1f", distance) + " km away");
                                                     location.setPadding(20,10,20,10);
 
                                                     card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -271,46 +272,53 @@ public class Home extends AppCompatActivity {
     }
 
     private synchronized List<User> applyFilters() {
-        List<User> tutorListWithFilters = new ArrayList<User>();
+        List<User> lstTutorsFilteredOnTags = new ArrayList<User>();
+        List<User> lstTutorsFiltered = new ArrayList<User>();
         System.out.println(ratingValue + ",  " + rangeValue);
+        System.out.println(sortingCriteria);
         for (User tutor: tutorList) {
             List<Subject> subjectTags = tutor.getTutorRole().getSubjectTags();
             if (subjectTags.isEmpty()) {
-                tutorListWithFilters = tutorList;
+                lstTutorsFilteredOnTags = tutorList;
             } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Math) && mathIsPresent) {
-                tutorListWithFilters.add(tutor);
+                lstTutorsFilteredOnTags.add(tutor);
             } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Physics) && physicsIsPresent) {
-                tutorListWithFilters.add(tutor);
+                lstTutorsFilteredOnTags.add(tutor);
             } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Chemistry) && chemistryIsPresent) {
-                tutorListWithFilters.add(tutor);
+                lstTutorsFilteredOnTags.add(tutor);
             } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Data_Structures) && dataStructuresIsPresent) {
-                tutorListWithFilters.add(tutor);
+                lstTutorsFilteredOnTags.add(tutor);
             } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.English) && englishIsPresent) {
-                tutorListWithFilters.add(tutor);
+                lstTutorsFilteredOnTags.add(tutor);
             }
         }
 
-        if (sortingCriteria == "DISTANCE") {
-            Location userLoc = new Location("");
-            userLoc.setLatitude(curUser.getLocation().latitude);
-            userLoc.setLongitude(curUser.getLocation().longitude);
+        if (sortingCriteria != null) {
+            if (sortingCriteria.equals("DISTANCE")) {
+                Location userLoc = new Location("");
+                userLoc.setLatitude(curUser.getLocation().latitude);
+                userLoc.setLongitude(curUser.getLocation().longitude);
 
-            for (User tutor : tutorListWithFilters) {
-                Location tutorLoc = new Location("");
-                tutorLoc.setLatitude(tutor.getLocation().latitude);
-                tutorLoc.setLongitude(tutor.getLocation().longitude);
-                if (userLoc.distanceTo(tutorLoc) > rangeValue) {
-                    tutorListWithFilters.remove(tutor);
+                for (User tutor : lstTutorsFilteredOnTags) {
+                    Location tutorLoc = new Location("");
+                    tutorLoc.setLatitude(tutor.getLocation().latitude);
+                    tutorLoc.setLongitude(tutor.getLocation().longitude);
+                    System.out.println(userLoc.distanceTo(tutorLoc));
+                    if (userLoc.distanceTo(tutorLoc) / 1000 <= rangeValue) {
+                        lstTutorsFiltered.add(tutor);
+                    }
+                }
+            } else { //sortingCriteria.equals("RATING")
+                for (User tutor : lstTutorsFilteredOnTags) {
+                    if (tutor.getTutorRole().getRating() >= ratingValue) {
+                        lstTutorsFiltered.add(tutor);
+                    }
                 }
             }
-        } else { //sortingCriteria == "RATING"
-            for (User tutor : tutorListWithFilters) {
-                if (tutor.getTutorRole().getRating() < ratingValue) {
-                    tutorListWithFilters.remove(tutor);
-                }
-            }
+        } else {
+            lstTutorsFiltered = tutorList;
         }
-        return tutorListWithFilters;
+        return lstTutorsFiltered;
     }
 
     @SuppressLint("MissingPermission")

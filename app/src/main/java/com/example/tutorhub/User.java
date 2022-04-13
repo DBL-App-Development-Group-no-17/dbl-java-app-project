@@ -3,6 +3,7 @@ package com.example.tutorhub;
 import android.location.Location;
 
 import java.util.List;
+import java.util.Locale;
 
 public class User {
     /** User based variables */
@@ -11,7 +12,7 @@ public class User {
     private Student studentRole = null;
     private Tutor tutorRole = null;
     private String name;
-    private String university;
+    private String university = "Unknown";
     private String phoneNumber;
     private String email;
     private LastLocation location;
@@ -28,7 +29,7 @@ public class User {
         if (student) { this.studentRole = new Student(); }
         if (tutor) { this.tutorRole = new Tutor(); }
         this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.location = location;
     }
     User(){
