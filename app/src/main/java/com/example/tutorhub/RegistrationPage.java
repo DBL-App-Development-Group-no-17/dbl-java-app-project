@@ -40,11 +40,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * To add:
- * valid phone number verification
- * valid email verification
- */
 public class RegistrationPage extends AppCompatActivity {
     FirebaseAuth mAuth;
     private DatabaseReference mDb;
@@ -153,7 +148,6 @@ public class RegistrationPage extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if(task.isSuccessful())
                                         {
-                                            System.out.println(ss2);
                                             String email = writeNewUser(ss2);
                                             Toast.makeText(RegistrationPage.this,"You are successfully Registered", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -205,7 +199,6 @@ public class RegistrationPage extends AppCompatActivity {
                     email.getText().toString(),
                     userLocation);
         }
-
 
         mDb.child("users").child(user.getUsername()).setValue(user);
         mDb.child("usernames").setValue(users);

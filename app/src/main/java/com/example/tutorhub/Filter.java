@@ -26,8 +26,6 @@ public class Filter extends AppCompatActivity {
     double ratingValue;
     String userEmail;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +35,6 @@ public class Filter extends AppCompatActivity {
         if (extras != null) {
             userEmail = extras.getString("email");
         }
-
 
         TextView cancel = findViewById(R.id.cancel_button);
         TextView reset = findViewById(R.id.reset_button);
@@ -51,9 +48,6 @@ public class Filter extends AppCompatActivity {
         ToggleButton chemistry = findViewById(R.id.chemistry_button);
         ToggleButton data_structures = findViewById(R.id.data_structures_button);
         Button saveFilters = findViewById(R.id.save_filters_button);
-        //Button dm = findViewById(R.id.dm_button);
-        //Button home = findViewById(R.id.home_button);
-        //Button map = findViewById(R.id.map_button);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +194,6 @@ public class Filter extends AppCompatActivity {
             }
         });
 
-
         saveFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -218,26 +211,5 @@ public class Filter extends AppCompatActivity {
                 finish();
             }
         });
-
-        /*dm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), DM.class));
-            }
-        });*/
-
-        /*home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Home.class));
-            }
-        });*/
-
-        /*map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Map.class));
-            }
-        });*/
     }
 }

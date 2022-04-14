@@ -41,13 +41,9 @@ public class Login extends AppCompatActivity {
                     else
                     {
                         String excString = task.getException().getMessage();
-                        Toast.makeText(Login.this,
-                                excString,
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, excString, Toast.LENGTH_SHORT).show();
                     }
-
                 });
-
             }
         });
 
@@ -56,7 +52,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), RegistrationPage.class));
-                //finish();
             }
         });
     }

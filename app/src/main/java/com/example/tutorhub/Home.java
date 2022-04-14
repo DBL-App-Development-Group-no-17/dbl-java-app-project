@@ -53,39 +53,7 @@ import java.util.Locale;
 public class Home extends AppCompatActivity {
     Context context = this;
 
-//    Task<DataSnapshot> database = FirebaseDatabase.getInstance().getReference().child("users").get().addOnCompleteListener(
-//            new OnCompleteListener<DataSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                    if (task.isSuccessful()) {
-//                        String s = task.getResult().getValue().toString();
-//                        String[] ss = s.split(", ");
-//                    }
-//                }
-//            });
-
-   DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//
-//    ValueEventListener query = reference.child("users").orderByChild("tutor").equalTo(true)
-//            .addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    if (dataSnapshot.exists()) {
-//                        // dataSnapshot is the "issue" node with all children with id 0
-//                        for (DataSnapshot user : dataSnapshot.getChildren()) {
-//                            System.out.println("USER:" + user.toString());
-//                            User curUser = user.getValue(User.class);
-//
-//                            System.out.println(curUser.getUsername());
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    int x = 1;
-//                }
-//            });
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -118,8 +86,6 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
-        System.out.println("CREATED");
 
         Button btnInfo = findViewById(R.id.home_info_button);
         btnInfo.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +124,6 @@ public class Home extends AppCompatActivity {
             chemistryIsPresent = extras.getBoolean("chemistryIsPresent");
             dataStructuresIsPresent = extras.getBoolean("dataStructuresIsPresent");
             englishIsPresent = extras.getBoolean("englishIsPresent");
-            System.out.println(sortingCriteria);
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -206,10 +171,7 @@ public class Home extends AppCompatActivity {
 
                                             LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
 
-                                            System.out.println(tutorList.size()+"sizespace");
-
                                             for (User tutor: filteredTutors) {
-                                                System.out.println(tutor.getUsername());
                                                 TextView tx = new TextView(context);
                                                 tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                                 tx.setText(tutor.getName());
@@ -294,8 +256,7 @@ public class Home extends AppCompatActivity {
     private synchronized List<User> applyFilters() {
         List<User> lstTutorsFilteredOnTags = new ArrayList<User>();
         List<User> lstTutorsFiltered = new ArrayList<User>();
-        System.out.println(ratingValue + ",  " + rangeValue);
-        System.out.println(sortingCriteria);
+
         if (mathIsPresent || physicsIsPresent || chemistryIsPresent || dataStructuresIsPresent || englishIsPresent) {
             for (User tutor : tutorList) {
                 List<Subject> subjectTags = tutor.getTutorRole().getSubjectTags();
@@ -325,7 +286,6 @@ public class Home extends AppCompatActivity {
                     Location tutorLoc = new Location("");
                     tutorLoc.setLatitude(tutor.getLocation().latitude);
                     tutorLoc.setLongitude(tutor.getLocation().longitude);
-                    System.out.println(userLoc.distanceTo(tutorLoc));
                     if (userLoc.distanceTo(tutorLoc) / 1000 <= rangeValue) {
                         lstTutorsFiltered.add(tutor);
                     }
@@ -349,9 +309,6 @@ public class Home extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                   System.out.println("FROM DEVICE");
-                   System.out.println("LAT: " + location.getLatitude());
-                   System.out.println("LON: " + location.getLongitude());
                     curUser.setLocation(location.getLatitude(), location.getLongitude());
                 }
                 saveUser(curUser);
@@ -366,90 +323,5 @@ public class Home extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //System.out.println("RESUMED");
-//        tutorListWithFilters.clear();
-//
-//        String sortingCriteria;
-//        Double rangeValue;
-//        Boolean mathIsPresent;
-//        Boolean physicsIsPresent;
-//        Boolean chemistryIsPresent;
-//        Boolean dataStructuresIsPresent;
-//        Boolean englishIsPresent;
-//
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            sortingCriteria = extras.getString("sortingCriteria");
-//            rangeValue = extras.getDouble("rangeValue");
-//            mathIsPresent = extras.getBoolean("mathIsPresent");
-//            physicsIsPresent = extras.getBoolean("physicsIsPresent");
-//            chemistryIsPresent = extras.getBoolean("chemistryIsPresent");
-//            dataStructuresIsPresent = extras.getBoolean("dataStructuresIsPresent");
-//            englishIsPresent = extras.getBoolean("englishIsPresent");
-//
-//            for (User tutor: tutorList) {
-//                if (tutor.getTutorRole().getSubjectTags().contains(Subject.Math) && mathIsPresent) {
-//                    tutorListWithFilters.add(tutor);
-//                } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Physics) && physicsIsPresent) {
-//                    tutorListWithFilters.add(tutor);
-//                } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Chemistry) && chemistryIsPresent) {
-//                    tutorListWithFilters.add(tutor);
-//                } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.Data_Structures) && dataStructuresIsPresent) {
-//                    tutorListWithFilters.add(tutor);
-//                } else if (tutor.getTutorRole().getSubjectTags().contains(Subject.English) && englishIsPresent) {
-//                    tutorListWithFilters.add(tutor);
-//                }
-//            }
-//
-//            LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
-//
-//            for (User tutor: tutorListWithFilters) {
-//                TextView tx = new TextView(context);
-//                tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                tx.setText(tutor.getName());
-//                TextView uni = new TextView(context);
-//                uni.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                uni.setText(tutor.getUniversity());
-//                TextView phone = new TextView(context);
-//                phone.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                phone.setText("Contact: " + tutor.getPhoneNumber());
-//                TextView email = new TextView(context);
-//                email.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                email.setText("Email: " + tutor.getEmail());
-//
-//                TextView location = new TextView(context);
-//                location.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                Location loc1 = new Location("");
-//                loc1.setLatitude(curUser.getLocation().latitude);
-//                loc1.setLongitude(curUser.getLocation().longitude);
-//                Location loc2 = new Location("");
-//                loc2.setLatitude(tutor.getLocation().latitude);
-//                loc2.setLongitude(tutor.getLocation().longitude);
-//                location.setText(loc1.distanceTo(loc2) + " km away");
-//                location.setPadding(20,10,20,10);
-//                tx.setText(location.getText().toString());
-//
-//                CardView card = new CardView(context);
-//                tx.setPadding(10, 5, 10, 5);
-//                uni.setPadding(10, 5, 10, 5);
-//                phone.setPadding(10, 5, 10, 5);
-//                email.setPadding(10, 5, 10, 5);
-//
-//                card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                card.setCardElevation(10);
-//                card.setRadius(20);
-//                card.setPreventCornerOverlap(true);
-//                card.setUseCompatPadding(true);
-//                card.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
-//
-//                LinearLayout lay = new LinearLayout(context);
-//                lay.setOrientation(LinearLayout.VERTICAL);
-//                lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                lay.addView(tx);
-//                lay.addView(location);
-//                ((LinearLayout) layout).addView(card);
-//                card.addView(lay);
-//            }
-//        }
     }
 }
