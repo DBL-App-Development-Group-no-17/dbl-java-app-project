@@ -18,13 +18,15 @@ import java.util.List;
 
 // to implement: Save Filters, subject addition, sorting strategy
 public class Filter extends AppCompatActivity {
+    final double MAX_RANGE = 100000;
+
     String sortingCriteria = "DISTANCE";
     List courses = new ArrayList();
-    double rangeValue;
+    double rangeValue = MAX_RANGE;
     double ratingValue;
     String userEmail;
 
-    final double MAX_RANGE = 100000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +58,6 @@ public class Filter extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (distance.isChecked()) {
-                    distance.toggle();
-                }
-                if (rating.isChecked()) {
-                    rating.toggle();
-                }
-
-                rangeValue = MAX_RANGE;
-                ratingValue = 0;
-                sortingCriteria = "";
-                courses.clear();
-                startActivity(new Intent(getApplicationContext(), Home.class));
                 finish();
             }
         });
@@ -76,7 +66,7 @@ public class Filter extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (distance.isChecked()) {
+                if (!distance.isChecked()) {
                     distance.toggle();
                 }
                 if (rating.isChecked()) {
@@ -143,7 +133,7 @@ public class Filter extends AppCompatActivity {
                     rangeValue = i * 0.1;
                 } else if (sortingCriteria == "RATING") {
                     progress.setText(String.valueOf(df.format(i * 0.05)));
-                    ratingValue = i * 0.2;
+                    ratingValue = i * 0.05;
                 }
             }
 
