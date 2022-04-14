@@ -21,7 +21,7 @@ public class Tutor extends UserRoles{
      * adds rating to tutor
      * @throws IllegalArgumentException if {@code rating < 1 || rating > 5 }
      */
-    public void addRating(int rating) {
+    public void addRating(float rating) {
         if (rating < 1 || rating > 5) {
             throw new IllegalArgumentException("rating < 1 or > 5 ");
         }
@@ -53,7 +53,7 @@ public class Tutor extends UserRoles{
      * @param student to be added
      * @throws IllegalArgumentException if {@code student.isStudent() == false}
      */
-    public void addTutor(String student){
+    public void addStudent(String student){
        // if(!student.isStudent()) { throw new IllegalArgumentException("User is not a student"); }
         studentHistory.add(student);
     }

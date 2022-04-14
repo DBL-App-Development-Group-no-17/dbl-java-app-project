@@ -15,7 +15,7 @@ public abstract class UserRoles {
     public void setSubjectTag(Subject subjectTag) {
         for (Subject x: subjectTags) {
             if (x.equals(subjectTag)) {
-                throw new IllegalArgumentException(subjectTag + " already in list");
+                return;
             }
         }
         subjectTags.add(subjectTag);

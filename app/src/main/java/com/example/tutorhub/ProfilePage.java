@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
 import android.app.AlertDialog;
@@ -23,10 +24,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Profile page for user
@@ -122,7 +126,24 @@ public class ProfilePage extends AppCompatActivity {
                                                         card.setPreventCornerOverlap(true);
                                                         card.setUseCompatPadding(true);
                                                         card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                        card.setClickable(true);
+                                                        card.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                                                                alert.setTitle(tutor.getName());
+                                                                String tags = "Subjects: ";
+                                                                tags = tags +tutor.getTutorRole().getSubjectTags().toString();
+                                                                System.out.println("tags");
+                                                                alert.setMessage("University: " + tutor.getUniversity() +
+                                                                        "\nEmail: "+tutor.getEmail() +
+                                                                        "\nPhone Nunmber: "+tutor.getPhoneNumber()+ "\n" +
+                                                                        tags);
 
+                                                                AlertDialog al = alert.create();
+                                                                al.show();
+                                                            }
+                                                        });
                                                         LinearLayout lay = new LinearLayout(context);
                                                         lay.setOrientation(LinearLayout.VERTICAL);
                                                         lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -212,6 +233,10 @@ public class ProfilePage extends AppCompatActivity {
 
 
 
+
+
+
+
                             LayoutInflater li2 = LayoutInflater.from(context);
                             View newNameDialog = li2.inflate(R.layout.new_name_dialog, null);
                             EditText name1 = (EditText) newNameDialog.findViewById(R.id.editTextTextName3);
@@ -298,6 +323,269 @@ public class ProfilePage extends AppCompatActivity {
                             });
 
 
+                            TextView pst = findViewById(R.id.textView5);
+                            LayoutInflater linf = LayoutInflater.from(context);
+                            View sel_tut = linf.inflate(R.layout.select_tutor, null);
+                            AlertDialog.Builder alert4 = new AlertDialog.Builder(context);
+
+                            alert4.setTitle("Add Tutor").setView(sel_tut);
+                            alert4.setCancelable(false);
+                            LinearLayout laytut = sel_tut.findViewById(R.id.linLayouttut);
+                            Button search = sel_tut.findViewById(R.id.searchpfp);
+                            EditText tutName = sel_tut.findViewById(R.id.editTextTextPersonName2);
+                            Button cancel = sel_tut.findViewById(R.id.button15);
+                            Button add = sel_tut.findViewById(R.id.button16);
+                            RatingBar rating = sel_tut.findViewById(R.id.ratingBar2);
+                            AlertDialog al4 = alert4.create();
+                            List<Boolean> changes = new ArrayList<>();
+                            rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                @Override
+                                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                                    changes.add(true);
+                                }
+                            });
+                            pst.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    al4.show();
+                                    ArrayList<User> tutors = new ArrayList<>();
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                    List<User> selTutor = new ArrayList<>();
+                                    List<CardView> cards = new ArrayList<>();
+                                    ValueEventListener query1 = ref.child("users").orderByChild("tutor").equalTo(true)
+                                            .addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    if (snapshot.exists()) {
+                                                        for (DataSnapshot tutor : snapshot.getChildren()) {
+                                                            boolean found = false;
+                                                            User curTutor = tutor.getValue(User.class);
+                                                            for(String usrn: user.getStudentRole().getTutorHistory()){
+                                                                if(usrn.equals(curTutor.getUsername())){
+                                                                    found = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if(!found){
+                                                                tutors.add(curTutor);
+                                                                System.out.println(curTutor.getName() + " asas");
+                                                                TextView tx = new TextView(context);
+                                                                tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                                tx.setText(curTutor.getName());
+                                                                CardView card = new CardView(context);
+                                                                tx.setPadding(10, 5, 10, 5);
+
+                                                                card.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                                card.setCardElevation(10);
+                                                                card.setRadius(20);
+                                                                card.setPreventCornerOverlap(true);
+                                                                card.setUseCompatPadding(true);
+                                                                card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                                cards.clear();
+                                                                card.setClickable(true);
+                                                                cards.add(card);
+                                                                card.setOnClickListener(new View.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(View view) {
+                                                                        selTutor.clear();
+                                                                        selTutor.add(curTutor);
+                                                                        boolean unsel = false;
+                                                                        System.out.println(selTutor.get(0));
+                                                                        for(CardView c: cards){
+                                                                            System.out.println(c.getDrawingCacheBackgroundColor());
+                                                                            System.out.println(c.getSolidColor());
+                                                                            if(c.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
+                                                                                c.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                        if(card.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
+                                                                            card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                                        }
+                                                                        else{
+                                                                            card.setCardBackgroundColor(getResources().getColorStateList(R.color.baby_blue));
+                                                                        }
+                                                                    }
+                                                                });
+
+                                                                LinearLayout lay = new LinearLayout(context);
+                                                                lay.setOrientation(LinearLayout.VERTICAL);
+                                                                lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                                lay.addView(tx);
+                                                                ((LinearLayout) laytut).addView(card);
+                                                                card.addView(lay);
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                    cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            tutName.setText("");
+                                            rating.setRating(0);
+                                            laytut.removeAllViews();
+                                            selTutor.clear();
+                                            al4.dismiss();
+
+                                        }
+                                    });
+                                    add.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            boolean fine = true;
+                                            if(selTutor.isEmpty()){
+                                                fine = false;
+                                                Toast.makeText(context,"Please select a tutor or cancel action.", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else if(changes.isEmpty()){
+                                                Toast.makeText(context,"Please add a rating to the tutor or cancel action", Toast.LENGTH_SHORT).show();
+                                                fine = false;
+                                            }
+                                            if(fine){
+                                                user.getStudentRole().addTutor(selTutor.get(0).getUsername());
+                                                selTutor.get(0).getTutorRole().addStudent(user.getUsername());
+                                                selTutor.get(0).getTutorRole().addRating(rating.getRating());
+                                                FirebaseDatabase.getInstance().getReference().child("users").child(user.getUsername()).setValue(user);
+                                                FirebaseDatabase.getInstance().getReference().child("users").child(selTutor.get(0).getUsername()).setValue(selTutor.get(0));
+                                                tutName.setText("");
+                                                selTutor.clear();
+                                                rating.setRating(0);
+                                                laytut.removeAllViews();
+                                                al4.dismiss();
+                                                Toast.makeText(context,"Successfully added Tutor (will be updated on refresh)", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+                                    });
+                                    search.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            String usrname = tutName.getText().toString();
+                                            System.out.println(tutors.size());
+                                            boolean found = false;
+                                            boolean empty = false;
+                                            for(User t: tutors) {
+                                                System.out.println("name: " + t.getUsername());
+                                                if(t.getUsername().equalsIgnoreCase(usrname)) {
+                                                    laytut.removeAllViews();
+                                                    found = true;
+                                                    System.out.println(t.getName() + " asas");
+                                                    TextView tx = new TextView(context);
+                                                    tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                    tx.setText(t.getName());
+                                                    CardView card = new CardView(context);
+                                                    tx.setPadding(10, 5, 10, 5);
+
+                                                    card.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                    card.setCardElevation(10);
+                                                    card.setRadius(20);
+                                                    card.setPreventCornerOverlap(true);
+                                                    card.setUseCompatPadding(true);
+                                                    card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                    cards.clear();
+                                                    card.setClickable(true);
+                                                    cards.add(card);
+                                                    card.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            selTutor.clear();
+                                                            selTutor.add(t);
+                                                            boolean unsel = false;
+                                                            System.out.println(selTutor.get(0));
+                                                            for(CardView c: cards){
+                                                                System.out.println(c.getDrawingCacheBackgroundColor());
+                                                                System.out.println(c.getSolidColor());
+                                                                if(c.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
+                                                                    c.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if(card.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
+                                                                card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                            }
+                                                            else{
+                                                                card.setCardBackgroundColor(getResources().getColorStateList(R.color.baby_blue));
+                                                            }
+                                                        }
+                                                    });
+                                                    LinearLayout lay = new LinearLayout(context);
+                                                    lay.setOrientation(LinearLayout.VERTICAL);
+                                                    lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                    lay.addView(tx);
+                                                    ((LinearLayout) laytut).addView(card);
+                                                    card.addView(lay);
+                                                }
+                                                else if(usrname.isEmpty()){
+                                                    Toast.makeText(context,"No user specified", Toast.LENGTH_SHORT).show();
+                                                    laytut.removeAllViews();
+                                                    empty = true;
+                                                    for(User t2: tutors){
+                                                        System.out.println(t2.getName() + " asas");
+                                                        TextView tx = new TextView(context);
+                                                        tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                        tx.setText(t2.getName());
+                                                        CardView card = new CardView(context);
+                                                        tx.setPadding(10, 5, 10, 5);
+
+                                                        card.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                        card.setCardElevation(10);
+                                                        card.setRadius(20);
+                                                        card.setPreventCornerOverlap(true);
+                                                        card.setUseCompatPadding(true);
+                                                        card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                        cards.clear();
+                                                        card.setClickable(true);
+                                                        cards.add(card);
+                                                        card.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                selTutor.clear();
+                                                                selTutor.add(t2);
+                                                                boolean unsel = false;
+                                                                System.out.println(selTutor.get(0));
+                                                                for(CardView c: cards){
+                                                                    System.out.println(c.getDrawingCacheBackgroundColor());
+                                                                    System.out.println(c.getSolidColor());
+                                                                    if(c.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
+                                                                        System.out.println("entered");
+                                                                        c.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                if(card.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
+                                                                    card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                                    System.out.println("ceheckede");
+                                                                }
+                                                                else{
+                                                                    card.setCardBackgroundColor(getResources().getColorStateList(R.color.baby_blue));
+                                                                }
+                                                            }
+                                                        });
+                                                        LinearLayout lay = new LinearLayout(context);
+                                                        lay.setOrientation(LinearLayout.VERTICAL);
+                                                        lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                                                        lay.addView(tx);
+                                                        ((LinearLayout) laytut).addView(card);
+                                                        card.addView(lay);
+                                                    }
+                                                }
+                                            }
+                                            if(!found && !empty){
+                                                Toast.makeText(context,"Username specified does not exist", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+
+                                }
+                            });
 
 
                         }

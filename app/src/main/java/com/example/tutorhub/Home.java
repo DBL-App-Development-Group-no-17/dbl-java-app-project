@@ -161,6 +161,7 @@ public class Home extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.exists()) {
+                                            tutorList.clear();
                                             for (DataSnapshot tutor : dataSnapshot.getChildren()) {
                                                 User curTutor = tutor.getValue(User.class);
                                                 tutorList.add(curTutor);
@@ -170,7 +171,7 @@ public class Home extends AppCompatActivity {
 
 
                                             LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
-
+                                            layout.removeAllViews();
                                             for (User tutor: filteredTutors) {
                                                 TextView tx = new TextView(context);
                                                 tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

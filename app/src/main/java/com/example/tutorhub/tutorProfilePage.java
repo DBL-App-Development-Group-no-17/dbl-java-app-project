@@ -39,6 +39,7 @@ public class tutorProfilePage extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
         Bundle extras = getIntent().getExtras();
+        System.out.println(Subject.Data_Structures.toString());
         String value = "";
         if(extras != null) {
             value = extras.getString("username");
@@ -74,9 +75,15 @@ public class tutorProfilePage extends AppCompatActivity {
                                         if(checkBoxes[i].getText().toString().equalsIgnoreCase(x.toString())){
                                             checkBoxes[i].setChecked(true);
                                         }
+                                        if(checkBoxes[i].getText().toString().equalsIgnoreCase("Data Structures") &&
+                                        x.toString().equalsIgnoreCase("Data_Structures")) {
+                                            checkBoxes[i].setChecked(true);
+                                        }
                                     }
+
                                 }
                             }
+
 
 
                             /** set correct vaiable */
@@ -123,10 +130,10 @@ public class tutorProfilePage extends AppCompatActivity {
                                                         students.add(temp);
                                                         System.out.println(students.size());
                                                     }
-                                                    for (User tutor : students) {
+                                                    for (User student : students) {
                                                         TextView tx = new TextView(context);
                                                         tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                        tx.setText(tutor.getName());
+                                                        tx.setText(student.getName());
                                                         CardView card = new CardView(context);
                                                         tx.setPadding(10, 5, 10, 5);
 
@@ -135,15 +142,29 @@ public class tutorProfilePage extends AppCompatActivity {
                                                         card.setRadius(20);
                                                         card.setPreventCornerOverlap(true);
                                                         card.setUseCompatPadding(true);
-                                                        card.setCardBackgroundColor(getResources().getColor(R.color.dark_grey));
+                                                        card.setCardBackgroundColor(getResources().getColor(R.color.white));
+                                                        card.setClickable(true);
+                                                        card.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                                                                alert.setTitle(student.getName());
+                                                                System.out.println("tags");
+                                                                alert.setMessage("University: " + student.getUniversity() +
+                                                                        "\nEmail: "+student.getEmail() +
+                                                                        "\nPhone Nunmber: "+student.getPhoneNumber());
 
+                                                                AlertDialog al = alert.create();
+                                                                al.show();
+                                                            }
+                                                        });
                                                         LinearLayout lay = new LinearLayout(context);
                                                         lay.setOrientation(LinearLayout.VERTICAL);
                                                         lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                                         lay.addView(tx);
                                                         ((LinearLayout) layout).addView(card);
                                                         card.addView(lay);
-                                                        students.remove(tutor);
+                                                        students.remove(student);
                                                     }
 
                                                 }
@@ -158,10 +179,14 @@ public class tutorProfilePage extends AppCompatActivity {
                                     if(!user.getTutorRole().getSubjectTags().isEmpty()){
                                         user.getTutorRole().emptyTags();
                                     }
+                                    String ds = "Data_Structures";
                                     for(int i = 0; i != checkBoxes.length; i++) {
                                         if(checkBoxes[i].isChecked()) {
                                             for(Subject x: Subject.values()){
                                                 if(checkBoxes[i].getText().toString().equalsIgnoreCase(x.toString())){
+                                                    user.getTutorRole().setSubjectTag(x);
+                                                }
+                                                else if(checkBoxes[i].getText().toString().equalsIgnoreCase("data structures") && x.toString().equalsIgnoreCase(ds)){
                                                     user.getTutorRole().setSubjectTag(x);
                                                 }
                                             }
