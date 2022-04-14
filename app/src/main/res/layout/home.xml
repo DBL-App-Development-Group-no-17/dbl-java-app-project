@@ -5,7 +5,9 @@
     android:id="@+id/home_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_200" >
+    android:background="@color/black_200"
+    android:screenOrientation="sensor"
+    tools:ignore="LockedOrientationActivity">
 
     <TextView
         android:id="@+id/home_text_champion"
@@ -21,7 +23,9 @@
         app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:screenOrientation="sensor"
+        tools:ignore="LockedOrientationActivity" />
 
     <Button
         android:id="@+id/filter_button"
@@ -65,14 +69,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck">
+        android:screenOrientation="sensor"
+        tools:ignore="LockedOrientationActivity|SpeakableTextPresentCheck">
 
         <LinearLayout
             android:id="@+id/layout_view_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <!--            <androidx.cardview.widget.CardView-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="wrap_content"-->
