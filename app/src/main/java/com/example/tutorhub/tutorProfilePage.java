@@ -193,6 +193,7 @@ public class tutorProfilePage extends AppCompatActivity {
                                         }
                                     }
                                     FirebaseDatabase.getInstance().getReference().child("users").child(user.getUsername()).setValue(user);
+                                    Toast.makeText(context, "Changes saved", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
