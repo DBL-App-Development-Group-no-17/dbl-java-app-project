@@ -1,90 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_200" >
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/home_text_champion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="184dp"
-        android:layout_marginRight="184dp"
-        android:text="Hi "
-        android:textColor="#FFFFFF"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_200"
+        android:fillViewport="true">
 
-    <Button
-        android:id="@+id/filter_button"
-        android:layout_width="wrap_content"
-        android:layout_height="48sp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:height="40sp"
-        android:background="#FF9800"
-        android:text="Filter"
-        android:textColor="@color/black_200"
-        app:backgroundTint="#FF9800"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/home_text_champion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="184dp"
+            android:layout_marginRight="184dp"
+            android:text="Hi "
+            android:textColor="#FFFFFF"
+            android:textSize="35sp"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/home_info_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginRight="17dp"
-        android:height="40sp"
-        android:text="i"
-        android:textColor="@color/black_200"
-        app:backgroundTint="#FF9800"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
-        app:layout_constraintEnd_toStartOf="@+id/filter_button"
-        app:layout_constraintStart_toEndOf="@+id/home_text_champion"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48sp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:height="40sp"
+            android:background="#FF9800"
+            android:text="Filter"
+            android:textColor="@color/black_200"
+            app:backgroundTint="#FF9800"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scroll_view_home"
-        android:layout_width="354dp"
-        android:layout_height="588dp"
-        android:layout_marginBottom="27dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck">
+        <Button
+            android:id="@+id/home_info_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:height="40sp"
+            android:text="i"
+            android:textColor="@color/black_200"
+            app:backgroundTint="#FF9800"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view_home"
+            app:layout_constraintEnd_toStartOf="@+id/filter_button"
+            app:layout_constraintStart_toEndOf="@+id/home_text_champion"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/layout_view_home"
+        <ScrollView
+            android:id="@+id/scroll_view_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
-            android:orientation="vertical">
-            <!--            <androidx.cardview.widget.CardView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                app:cardElevation="10dp"-->
-            <!--                app:cardCornerRadius="20dp"-->
-            <!--                android:layout_margin="10dp"-->
-            <!--                app:cardBackgroundColor="@color/white"-->
-            <!--                app:cardMaxElevation="12dp"-->
-            <!--                app:cardPreventCornerOverlap="true"-->
-            <!--                app:cardUseCompatPadding="true"-->
-            <!--            />-->
-        </LinearLayout>
-    </ScrollView>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/layout_view_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:orientation="vertical">
+                <!--            <androidx.cardview.widget.CardView-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                app:cardElevation="10dp"-->
+                <!--                app:cardCornerRadius="20dp"-->
+                <!--                android:layout_margin="10dp"-->
+                <!--                app:cardBackgroundColor="@color/white"-->
+                <!--                app:cardMaxElevation="12dp"-->
+                <!--                app:cardPreventCornerOverlap="true"-->
+                <!--                app:cardUseCompatPadding="true"-->
+                <!--            />-->
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

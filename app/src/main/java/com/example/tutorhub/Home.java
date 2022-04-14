@@ -64,7 +64,7 @@ public class Home extends AppCompatActivity {
 //                }
 //            });
 
-   DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 //
 //    ValueEventListener query = reference.child("users").orderByChild("tutor").equalTo(true)
 //            .addValueEventListener(new ValueEventListener() {
@@ -178,117 +178,117 @@ public class Home extends AppCompatActivity {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ValueEventListener query1 = ref.child("users").orderByChild("email").equalTo(userEmail)
-            .addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot user : dataSnapshot.getChildren()) {
-                            curUser = user.getValue(User.class);
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                curUser = user.getValue(User.class);
 
-                            TextView name = findViewById(R.id.home_text_champion);
-                            name.setText("Hi " + curUser.getName().split(" ")[0] + "!");
+                                TextView name = findViewById(R.id.home_text_champion);
+                                name.setText("Hi " + curUser.getName().split(" ")[0] + "!");
 
-                            getLocation();
+                                getLocation();
 
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                            ValueEventListener query = ref.child("users").orderByChild("tutor").equalTo(true)
-                                .addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.exists()) {
-                                            for (DataSnapshot tutor : dataSnapshot.getChildren()) {
-                                                User curTutor = tutor.getValue(User.class);
-                                                tutorList.add(curTutor);
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                ValueEventListener query = ref.child("users").orderByChild("tutor").equalTo(true)
+                                        .addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+                                                    for (DataSnapshot tutor : dataSnapshot.getChildren()) {
+                                                        User curTutor = tutor.getValue(User.class);
+                                                        tutorList.add(curTutor);
+                                                    }
+
+                                                    List<User> filteredTutors = applyFilters();
+
+
+                                                    LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
+
+                                                    System.out.println(tutorList.size()+"sizespace");
+
+                                                    for (User tutor: filteredTutors) {
+                                                        System.out.println(tutor.getUsername());
+                                                        TextView tx = new TextView(context);
+                                                        tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        tx.setText(tutor.getName());
+                                                        tx.setTextSize(20);
+                                                        tx.setTypeface(null, Typeface.BOLD);
+
+                                                        TextView uni = new TextView(context);
+                                                        uni.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        uni.setText("University: " + tutor.getUniversity());
+                                                        tx.setTypeface(null, Typeface.BOLD);
+
+                                                        TextView phone = new TextView(context);
+                                                        phone.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        phone.setText("Phone: " + tutor.getPhoneNumber());
+
+                                                        TextView email = new TextView(context);
+                                                        email.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        email.setText("Email: " + tutor.getEmail());
+
+                                                        TextView subjects = new TextView(context);
+                                                        subjects.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        String strSubjectsList = tutor.getTutorRole().getSubjectTags().toString();
+                                                        String strSubjects = strSubjectsList.substring(1, strSubjectsList.length() - 1);
+                                                        subjects.setText("Subjects: " + strSubjects);
+
+                                                        TextView rating = new TextView(context);
+                                                        rating.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        rating.setText("Rating: " + tutor.getTutorRole().getRating());
+
+                                                        TextView location = new TextView(context);
+                                                        location.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        Location loc1 = new Location("");
+                                                        loc1.setLatitude(curUser.getLocation().latitude);
+                                                        loc1.setLongitude(curUser.getLocation().longitude);
+                                                        Location loc2 = new Location("");
+                                                        loc2.setLatitude(tutor.getLocation().latitude);
+                                                        loc2.setLongitude(tutor.getLocation().longitude);
+                                                        float distance = loc1.distanceTo(loc2) / 1000;
+                                                        location.setText(String.format("%.1f", distance) + " km away");
+                                                        location.setPadding(20,10,20,10);
+
+                                                        CardView card = new CardView(context);
+                                                        card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        card.setCardElevation(10);
+                                                        card.setRadius(20);
+                                                        card.setPreventCornerOverlap(true);
+                                                        card.setUseCompatPadding(true);
+                                                        card.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
+
+                                                        LinearLayout lay = new LinearLayout(context);
+                                                        lay.setOrientation(LinearLayout.VERTICAL);
+                                                        lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                                        lay.addView(tx);
+                                                        lay.addView(uni);
+                                                        lay.addView(phone);
+                                                        lay.addView(email);
+                                                        lay.addView(subjects);
+                                                        lay.addView(rating);
+                                                        lay.addView(location);
+                                                        lay.setPadding(10, 5, 10, 5);
+                                                        ((LinearLayout) layout).addView(card);
+                                                        card.addView(lay);
+                                                    }
+                                                }
                                             }
 
-                                            List<User> filteredTutors = applyFilters();
-
-
-                                            LinearLayout layout = (LinearLayout) findViewById(R.id.layout_view_home);
-
-                                            System.out.println(tutorList.size()+"sizespace");
-
-                                            for (User tutor: filteredTutors) {
-                                                System.out.println(tutor.getUsername());
-                                                TextView tx = new TextView(context);
-                                                tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                tx.setText(tutor.getName());
-                                                tx.setTextSize(20);
-                                                tx.setTypeface(null, Typeface.BOLD);
-
-                                                TextView uni = new TextView(context);
-                                                uni.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                uni.setText("University: " + tutor.getUniversity());
-                                                tx.setTypeface(null, Typeface.BOLD);
-
-                                                TextView phone = new TextView(context);
-                                                phone.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                phone.setText("Phone: " + tutor.getPhoneNumber());
-
-                                                TextView email = new TextView(context);
-                                                email.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                email.setText("Email: " + tutor.getEmail());
-
-                                                TextView subjects = new TextView(context);
-                                                subjects.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                String strSubjectsList = tutor.getTutorRole().getSubjectTags().toString();
-                                                String strSubjects = strSubjectsList.substring(1, strSubjectsList.length() - 1);
-                                                subjects.setText("Subjects: " + strSubjects);
-
-                                                TextView rating = new TextView(context);
-                                                rating.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                rating.setText("Rating: " + tutor.getTutorRole().getRating());
-
-                                                TextView location = new TextView(context);
-                                                location.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                Location loc1 = new Location("");
-                                                loc1.setLatitude(curUser.getLocation().latitude);
-                                                loc1.setLongitude(curUser.getLocation().longitude);
-                                                Location loc2 = new Location("");
-                                                loc2.setLatitude(tutor.getLocation().latitude);
-                                                loc2.setLongitude(tutor.getLocation().longitude);
-                                                float distance = loc1.distanceTo(loc2) / 1000;
-                                                location.setText(String.format("%.1f", distance) + " km away");
-                                                location.setPadding(20,10,20,10);
-
-                                                CardView card = new CardView(context);
-                                                card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                card.setCardElevation(10);
-                                                card.setRadius(20);
-                                                card.setPreventCornerOverlap(true);
-                                                card.setUseCompatPadding(true);
-                                                card.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
-
-                                                LinearLayout lay = new LinearLayout(context);
-                                                lay.setOrientation(LinearLayout.VERTICAL);
-                                                lay.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                                lay.addView(tx);
-                                                lay.addView(uni);
-                                                lay.addView(phone);
-                                                lay.addView(email);
-                                                lay.addView(subjects);
-                                                lay.addView(rating);
-                                                lay.addView(location);
-                                                lay.setPadding(10, 5, 10, 5);
-                                                ((LinearLayout) layout).addView(card);
-                                                card.addView(lay);
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                int x = 1;
                                             }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        int x = 1;
-                                    }
-                                });
+                                        });
+                            }
                         }
                     }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    int x = 1;
-                }
-            });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        int x = 1;
+                    }
+                });
     }
 
     private synchronized List<User> applyFilters() {
@@ -349,9 +349,9 @@ public class Home extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                   System.out.println("FROM DEVICE");
-                   System.out.println("LAT: " + location.getLatitude());
-                   System.out.println("LON: " + location.getLongitude());
+                    System.out.println("FROM DEVICE");
+                    System.out.println("LAT: " + location.getLatitude());
+                    System.out.println("LON: " + location.getLongitude());
                     curUser.setLocation(location.getLatitude(), location.getLongitude());
                 }
                 saveUser(curUser);
