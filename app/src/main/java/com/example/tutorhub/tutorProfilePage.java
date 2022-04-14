@@ -238,6 +238,97 @@ public class tutorProfilePage extends AppCompatActivity {
                                     al.dismiss();
                                 }
                             });
+
+
+                            LayoutInflater li2 = LayoutInflater.from(context);
+                            View newNameDialog = li2.inflate(R.layout.new_name_dialog, null);
+                            EditText name1 = (EditText) newNameDialog.findViewById(R.id.editTextTextName3);
+                            Button setName_btn = (Button) newNameDialog.findViewById(R.id.setNewName_btn);
+                            Button cancelName_btn = (Button) newNameDialog.findViewById(R.id.cancelNewName_btn);
+                            alert.setTitle("Reset Name").setView(newNameDialog);
+                            AlertDialog al2 = alert.create();
+
+                            name.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    al2.show();
+                                }
+                            });
+
+
+                            cancelName_btn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    name1.setText("");
+                                    al2.dismiss();
+
+                                }
+                            });
+
+                            setName_btn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    boolean fine = true;
+                                    if (TextUtils.isEmpty(name1.getText())) {
+                                        name1.setError("May not be empty");
+                                        fine = false;
+                                    }
+                                    if (fine) {
+                                        databaseReference.child("users").child(user.getUsername()).child("name").setValue(name1.getText().toString());
+                                        name1.setText("");
+                                        al2.dismiss();
+
+
+                                    }
+                                }
+                            });
+                            LayoutInflater li3 = LayoutInflater.from(context);
+                            View newPhoneNumberDialog = li3.inflate(R.layout.new_contact_information_dialog, null);
+                            EditText phoneNumber = (EditText) newPhoneNumberDialog.findViewById(R.id.editTextTextContactInformation);
+                            Button setPhoneNumber_btn = (Button) newPhoneNumberDialog.findViewById(R.id.setNewPhoneNumber_btn);
+                            Button cancelPhoneNumber_btn = (Button) newPhoneNumberDialog.findViewById(R.id.cancelNewPhoneNumber_btn);
+                            alert.setTitle("Reset Phone Number").setView(newPhoneNumberDialog);
+                            AlertDialog al3 = alert.create();
+
+                            phoneNr.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    al3.show();
+                                }
+                            });
+
+
+                            cancelPhoneNumber_btn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    phoneNumber.setText("");
+                                    al3.dismiss();
+
+                                }
+                            });
+
+                            setPhoneNumber_btn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    boolean fine = true;
+                                    if (TextUtils.isEmpty(phoneNumber.getText())) {
+                                        phoneNumber.setError("May not be empty");
+                                        fine = false;
+                                    }
+                                    if (fine) {
+                                        databaseReference.child("users").child(user.getUsername()).child("phoneNumber").setValue(phoneNumber.getText().toString());
+                                        phoneNumber.setText("");
+                                        al3.dismiss();
+
+
+                                    }
+                                }
+                            });
+
+
+
+
+
                         }
 
                     }
