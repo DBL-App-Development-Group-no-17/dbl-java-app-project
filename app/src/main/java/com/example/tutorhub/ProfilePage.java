@@ -272,6 +272,7 @@ public class ProfilePage extends AppCompatActivity {
                                     }
                                     if (fine) {
                                         databaseReference.child("users").child(user.getUsername()).child("name").setValue(name1.getText().toString());
+                                        Toast.makeText(context,"Name Successfully Changed", Toast.LENGTH_SHORT).show();
                                         name1.setText("");
                                         al2.dismiss();
 
@@ -314,6 +315,7 @@ public class ProfilePage extends AppCompatActivity {
                                     }
                                     if (fine) {
                                         databaseReference.child("users").child(user.getUsername()).child("phoneNumber").setValue(phoneNumber.getText().toString());
+                                        Toast.makeText(context,"Contact Information Successfully Changed", Toast.LENGTH_SHORT).show();
                                         phoneNumber.setText("");
                                         al3.dismiss();
 
