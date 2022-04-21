@@ -16,6 +16,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:ems="10"
+            android:fontFamily="@font/montserrat_r"
             android:hint="New phone number"
             android:inputType="text" />
 
@@ -35,6 +36,7 @@
                     android:layout_marginRight="4dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_b"
                     android:text="Set" />
 
                 <Button
@@ -46,6 +48,7 @@
                     android:layout_marginRight="4dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_b"
                     android:text="Cancel" />
         </LinearLayout>
 </LinearLayout>

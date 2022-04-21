@@ -220,7 +220,7 @@ public class Home extends AppCompatActivity {
                                                 card.setRadius(20);
                                                 card.setPreventCornerOverlap(true);
                                                 card.setUseCompatPadding(true);
-                                                card.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
+                                                card.setCardBackgroundColor(getResources().getColor(R.color.baby_blue));
 
                                                 LinearLayout lay = new LinearLayout(context);
                                                 lay.setOrientation(LinearLayout.VERTICAL);
