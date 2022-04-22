@@ -39,11 +39,9 @@ public class tutorProfilePage extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
         Bundle extras = getIntent().getExtras();
-        System.out.println(Subject.Data_Structures.toString());
         String value = "";
         if(extras != null) {
             value = extras.getString("username");
-            System.out.println(value + "sui");
         }
 
         databaseReference.child("users").child(value).get()
@@ -51,12 +49,14 @@ public class tutorProfilePage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if(!task.isSuccessful()){
-                            //not sure what to put here
+                            Toast.makeText(context,
+                                    "Unexpected error occured, please leave and re-open the page.",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
                         }
                         else{
                             /** User from database */
                             User user = task.getResult().getValue(User.class);
-                            //user.getTutorRole().setSubjectTag(Subject.English);
 
                             /** variables for page */
                             TextView name = findViewById(R.id.usersNametut);
@@ -69,6 +69,7 @@ public class tutorProfilePage extends AppCompatActivity {
                             checkBoxes[2] = findViewById(R.id.checkBox3);
                             checkBoxes[3] = findViewById(R.id.checkBox4);
                             checkBoxes[4] = findViewById(R.id.checkBox5);
+                            // update checkboxes in accordance to set tags
                             if(!user.getTutorRole().getSubjectTags().isEmpty()){
                                 for(Subject x: user.getTutorRole().getSubjectTags()){
                                     for(int i = 0; i != checkBoxes.length; i ++){
@@ -84,15 +85,13 @@ public class tutorProfilePage extends AppCompatActivity {
                                 }
                             }
 
-
-
                             /** set correct vaiable */
                             name.setText(user.getName() + " ("+user.getUsername()+")");
                             email.setText(user.getEmail());
                             phoneNr.setText(user.getPhoneNumber());
-                            System.out.println(user.getTutorRole().getStudentHistory().isEmpty());
 
                             /** Tutor History cards */
+                            // Display no history if there is none
                             if(user.getTutorRole().getStudentHistory().size() == 0){
                                 TextView tx = new TextView(context);
                                 tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -117,6 +116,7 @@ public class tutorProfilePage extends AppCompatActivity {
 
                             }
                             else {
+                                // Show student history otherwise
                                 ArrayList<User> students = new ArrayList<>();
                                 for(String username: user.getTutorRole().getStudentHistory()) {
                                     databaseReference.child("users").child(username).get()
@@ -125,11 +125,9 @@ public class tutorProfilePage extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                                     if (task.isSuccessful()) {
                                                         User temp = task.getResult().getValue(User.class);
-                                                        System.out.println(task.getResult().getValue());
-                                                        System.out.println(temp.getName());
                                                         students.add(temp);
-                                                        System.out.println(students.size());
                                                     }
+                                                    // create Student cards
                                                     for (User student : students) {
                                                         TextView tx = new TextView(context);
                                                         tx.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -144,12 +142,12 @@ public class tutorProfilePage extends AppCompatActivity {
                                                         card.setUseCompatPadding(true);
                                                         card.setCardBackgroundColor(getResources().getColor(R.color.white));
                                                         card.setClickable(true);
+                                                        // Display information on click
                                                         card.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
                                                                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                                                                 alert.setTitle(student.getName());
-                                                                System.out.println("tags");
                                                                 alert.setMessage("University: " + student.getUniversity() +
                                                                         "\nEmail: "+student.getEmail() +
                                                                         "\nPhone Nunmber: "+student.getPhoneNumber());
@@ -173,6 +171,7 @@ public class tutorProfilePage extends AppCompatActivity {
 
                             }
                             TextView save = findViewById(R.id.SaveTexttut);
+                            // Save changes to tags
                             save.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -197,8 +196,8 @@ public class tutorProfilePage extends AppCompatActivity {
                                 }
                             });
 
-                            /** variables for dialog view */
 
+                            // Variables for reset Password Dialog
                             TextView resetPass = findViewById(R.id.textNewPasstut);
                             LayoutInflater li = LayoutInflater.from(context);
                             View newPassDialog = li.inflate(R.layout.new_password_dialog, null);
@@ -235,7 +234,6 @@ public class tutorProfilePage extends AppCompatActivity {
                                         fine = false;
                                     }
                                     if (fine) {
-                                        System.out.println(user.getPassword());
                                         user.resetPassword(password1.getText().toString());
                                         databaseReference.child("users").child(user.getUsername()).setValue(user);
                                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -249,7 +247,7 @@ public class tutorProfilePage extends AppCompatActivity {
                                                     al.dismiss();
                                                 }
                                                 else{
-                                                    Toast.makeText(context,"ErrorOccurec", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context,"Error occured (there may are less than 6 characters).", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
@@ -265,7 +263,7 @@ public class tutorProfilePage extends AppCompatActivity {
                                 }
                             });
 
-
+                            // Variables for new name dialog
                             LayoutInflater li2 = LayoutInflater.from(context);
                             View newNameDialog = li2.inflate(R.layout.new_name_dialog, null);
                             EditText name1 = (EditText) newNameDialog.findViewById(R.id.editTextTextName3);
@@ -309,6 +307,8 @@ public class tutorProfilePage extends AppCompatActivity {
                                     }
                                 }
                             });
+
+                            // Variables for new contact information dialog
                             LayoutInflater li3 = LayoutInflater.from(context);
                             View newPhoneNumberDialog = li3.inflate(R.layout.new_contact_information_dialog, null);
                             EditText phoneNumber = (EditText) newPhoneNumberDialog.findViewById(R.id.editTextTextContactInformation);
@@ -361,6 +361,7 @@ public class tutorProfilePage extends AppCompatActivity {
 
                     }
                 });
+        // Log out
         TextView logOut = findViewById(R.id.logoutTXTtut);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -369,35 +370,5 @@ public class tutorProfilePage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
-
-
-
-//        //User user = getIntent().getParcelableExtra("user");
-//        User user = new User("username", "Firstname Surname", "password", true,
-//                false, "911111111111111", "email@email.com");
-
-//        User user3 = new User("username1", "Bobby(OG) Johnson", "password", false,
-//                true, "911", "email1@email.com");
-
-
-
-
-
-
-        //else{
-//            for(User x: user.getStudentRole().getTutorHistory()){
-//                int i=0;
-//                TextView tx = new TextView(this);
-//                tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-//                tx.setText(x.getName());
-//                tx.setId(i);
-//                i++;
-//                ((LinearLayout) layout).addView(tx);
-//            }
-//        }
-
-        ;
-
-
     }
 }

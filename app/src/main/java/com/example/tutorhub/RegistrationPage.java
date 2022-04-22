@@ -43,7 +43,7 @@ import java.util.List;
 public class RegistrationPage extends AppCompatActivity {
     FirebaseAuth mAuth;
     private DatabaseReference mDb;
-
+    // variables to be set by user
     EditText userName;
     EditText name;
     EditText email;
@@ -59,7 +59,7 @@ public class RegistrationPage extends AppCompatActivity {
         setContentView(R.layout.registration_page);
         mAuth = FirebaseAuth.getInstance();
 
-        // variables
+        //initialization of above variables
         userName = findViewById(R.id.usernameInput);
         name = findViewById(R.id.nameInput);
         email = findViewById(R.id.emailInput);
@@ -70,8 +70,9 @@ public class RegistrationPage extends AppCompatActivity {
         student = findViewById(R.id.toggle_student);
         tutor = findViewById(R.id.toggle_tutor);
         CheckBox checkBox = findViewById(R.id.checkBox_loc);
-
         Button btnRegister = findViewById(R.id.reg_button);
+
+        // Checks whether everything has been set correctly
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +128,7 @@ public class RegistrationPage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
+                            // Check if username already exists
                             String s = task.getResult().getValue().toString();
                             String[] ss = s.split(", ");
                             boolean matches = false;
@@ -142,6 +144,7 @@ public class RegistrationPage extends AppCompatActivity {
                             }
                             if (!matches && boolArr.get(0)) {
                                 ss2.add(userName.getText().toString());
+                                // If not then create user
                                 mAuth.createUserWithEmailAndPassword(userEmail,userPassword)
                                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -174,6 +177,11 @@ public class RegistrationPage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Function which creates user in database
+     * @param users
+     * @return user.getEmail()
+     */
     public String writeNewUser(List<String> users) {
         LastLocation userLocation = new LastLocation(1.0,1.0);
         mDb = FirebaseDatabase.getInstance().getReference();

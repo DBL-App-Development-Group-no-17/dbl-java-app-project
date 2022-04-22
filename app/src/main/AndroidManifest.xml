@@ -22,8 +22,6 @@
         <activity android:name=".Login" android:exported="true"></activity>
         <activity android:name=".RegistrationPage" android:exported="true"></activity>
         <activity android:name=".Home" android:exported="true"></activity>
-        <activity android:name=".DM" android:exported="true"></activity>
-        <activity android:name=".Map" android:exported="true"></activity>
         <activity android:name=".Filter" android:exported="true"></activity>
         <activity android:name=".ProfilePage" android:exported="true"></activity>
         <activity android:name=".tutorProfilePage" android:exported="true"></activity>

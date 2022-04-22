@@ -19,7 +19,7 @@ public class User {
 
 
     /**
-     * Constructor
+     * Constructors
      */
     User(String username, String name, String password, boolean student, boolean tutor,
          String phoneNumber, String email, LastLocation location) {
@@ -133,11 +133,10 @@ public class User {
     /**
      * Adds tutor role to user
      * @param role role to add
-     * @throws IllegalArgumentException if user already has role
      */
     public void addTutorRole(Tutor role) {
         if(tutorRole != null) {
-            throw new IllegalArgumentException("User already is a tutor");
+            return;
         }
         tutorRole = role;
     }
@@ -145,11 +144,10 @@ public class User {
     /**
      * Adds student role to user
      * @param role role to add
-     * @throws IllegalArgumentException if user already has role
      */
     public void addStudentRole(Student role) {
         if(studentRole != null) {
-            throw new IllegalArgumentException("User already is a student");
+            return;
         }
         studentRole = role;
     }

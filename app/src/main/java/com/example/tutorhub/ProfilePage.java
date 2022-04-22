@@ -47,7 +47,6 @@ public class ProfilePage extends AppCompatActivity {
         String value = "";
         if(extras != null) {
             value = extras.getString("username");
-            System.out.println(value + "sui");
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
@@ -57,25 +56,28 @@ public class ProfilePage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if(!task.isSuccessful()){
-                            //not sure what to put here
+                            Toast.makeText(context,
+                                    "Unexpected error occured, please leave and re-open the page.",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
                         }
                         else{
-                            /** User from database */
+                            // User from database
                             User user = task.getResult().getValue(User.class);
 
-                            /** variables for page */
+                            // variables for page
                             TextView name = findViewById(R.id.usersName);
                             TextView email = findViewById(R.id.usersEmail);
                             TextView phoneNr = findViewById(R.id.phoneNumber);
                             LinearLayout layout = (LinearLayout) findViewById(R.id.linLayout);
 
-                            /** set correct vaiable */
+                            // set correct variables
                             name.setText(user.getName() + " ("+user.getUsername()+")");
                             email.setText(user.getEmail());
                             phoneNr.setText(user.getPhoneNumber());
-                            System.out.println(user.getStudentRole().getTutorHistory().isEmpty());
 
                             /** Tutor History cards */
+                            // If empty tell the user that
                             if(user.getStudentRole().getTutorHistory().size() == 0){
                                 TextView tx = new TextView(context);
                                 tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
@@ -108,11 +110,9 @@ public class ProfilePage extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                                     if (task.isSuccessful()) {
                                                         User temp = task.getResult().getValue(User.class);
-                                                        System.out.println(task.getResult().getValue());
-                                                        System.out.println(temp.getName());
                                                         tutors.add(temp);
-                                                        System.out.println(tutors.size());
                                                     }
+                                                    // Show tutors from student history
                                                     for (User tutor : tutors) {
                                                         TextView tx = new TextView(context);
                                                         tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -127,6 +127,7 @@ public class ProfilePage extends AppCompatActivity {
                                                         card.setUseCompatPadding(true);
                                                         card.setCardBackgroundColor(getResources().getColor(R.color.white));
                                                         card.setClickable(true);
+                                                        // Display information if tutor is clicked
                                                         card.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
@@ -134,7 +135,6 @@ public class ProfilePage extends AppCompatActivity {
                                                                 alert.setTitle(tutor.getName());
                                                                 String tags = "Subjects: ";
                                                                 tags = tags +tutor.getTutorRole().getSubjectTags().toString();
-                                                                System.out.println("tags");
                                                                 alert.setMessage("University: " + tutor.getUniversity() +
                                                                         "\nEmail: "+tutor.getEmail() +
                                                                         "\nPhone Nunmber: "+tutor.getPhoneNumber()+ "\n" +
@@ -155,16 +155,10 @@ public class ProfilePage extends AppCompatActivity {
 
                                                 }
                                             });
-
-
-
-
-
                                 }
 
                             }
-                            /** variables for dialog view */
-
+                            // Variables for reset Password Dialog View
                             TextView resetPass = findViewById(R.id.textNewPass);
                             LayoutInflater li = LayoutInflater.from(context);
                             View newPassDialog = li.inflate(R.layout.new_password_dialog, null);
@@ -201,7 +195,6 @@ public class ProfilePage extends AppCompatActivity {
                                         fine = false;
                                     }
                                     if (fine) {
-                                        System.out.println(user.getPassword());
                                         user.resetPassword(password1.getText().toString());
                                         databaseReference.child("users").child(user.getUsername()).setValue(user);
                                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -215,7 +208,7 @@ public class ProfilePage extends AppCompatActivity {
                                                     al.dismiss();
                                                 }
                                                 else{
-                                                    Toast.makeText(context,"ErrorOccurec", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context,"Error occured (there may are less than 6 characters).", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
@@ -236,7 +229,7 @@ public class ProfilePage extends AppCompatActivity {
 
 
 
-
+                            // Variables for New Name Dialog View
                             LayoutInflater li2 = LayoutInflater.from(context);
                             View newNameDialog = li2.inflate(R.layout.new_name_dialog, null);
                             EditText name1 = (EditText) newNameDialog.findViewById(R.id.editTextTextName3);
@@ -280,6 +273,7 @@ public class ProfilePage extends AppCompatActivity {
                                     }
                                 }
                             });
+                            // Variables for Contact Information Dialog View
                             LayoutInflater li3 = LayoutInflater.from(context);
                             View newPhoneNumberDialog = li3.inflate(R.layout.new_contact_information_dialog, null);
                             EditText phoneNumber = (EditText) newPhoneNumberDialog.findViewById(R.id.editTextTextContactInformation);
@@ -324,12 +318,11 @@ public class ProfilePage extends AppCompatActivity {
                                 }
                             });
 
-
+                            // Variables for Add Tutor Dialog View
                             TextView pst = findViewById(R.id.textView5);
                             LayoutInflater linf = LayoutInflater.from(context);
                             View sel_tut = linf.inflate(R.layout.select_tutor, null);
                             AlertDialog.Builder alert4 = new AlertDialog.Builder(context);
-
                             alert4.setTitle("Add Tutor").setView(sel_tut);
                             alert4.setCancelable(false);
                             LinearLayout laytut = sel_tut.findViewById(R.id.linLayouttut);
@@ -340,6 +333,7 @@ public class ProfilePage extends AppCompatActivity {
                             RatingBar rating = sel_tut.findViewById(R.id.ratingBar2);
                             AlertDialog al4 = alert4.create();
                             List<Boolean> changes = new ArrayList<>();
+
                             rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                                 @Override
                                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -359,6 +353,7 @@ public class ProfilePage extends AppCompatActivity {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     if (snapshot.exists()) {
+                                                        // Display tutors if not in student history
                                                         for (DataSnapshot tutor : snapshot.getChildren()) {
                                                             boolean found = false;
                                                             User curTutor = tutor.getValue(User.class);
@@ -370,7 +365,6 @@ public class ProfilePage extends AppCompatActivity {
                                                             }
                                                             if(!found){
                                                                 tutors.add(curTutor);
-                                                                System.out.println(curTutor.getName() + " asas");
                                                                 TextView tx = new TextView(context);
                                                                 tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                                                                 tx.setText(curTutor.getName());
@@ -386,16 +380,15 @@ public class ProfilePage extends AppCompatActivity {
                                                                 cards.clear();
                                                                 card.setClickable(true);
                                                                 cards.add(card);
+
+                                                                // Select tutor if card is clicked
                                                                 card.setOnClickListener(new View.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(View view) {
                                                                         selTutor.clear();
                                                                         selTutor.add(curTutor);
-                                                                        boolean unsel = false;
-                                                                        System.out.println(selTutor.get(0));
+                                                                        // Change card color if clicked
                                                                         for(CardView c: cards){
-                                                                            System.out.println(c.getDrawingCacheBackgroundColor());
-                                                                            System.out.println(c.getSolidColor());
                                                                             if(c.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
                                                                                 c.setCardBackgroundColor(getResources().getColor(R.color.white));
                                                                                 break;
@@ -424,7 +417,7 @@ public class ProfilePage extends AppCompatActivity {
 
                                                 @Override
                                                 public void onCancelled(@NonNull DatabaseError error) {
-
+                                                    Toast.makeText(context, "Unexpected error occured, please try again", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                     cancel.setOnClickListener(new View.OnClickListener() {
@@ -470,15 +463,13 @@ public class ProfilePage extends AppCompatActivity {
                                         @Override
                                         public void onClick(View view) {
                                             String usrname = tutName.getText().toString();
-                                            System.out.println(tutors.size());
                                             boolean found = false;
                                             boolean empty = false;
+                                            //create cards based on tutors in database
                                             for(User t: tutors) {
-                                                System.out.println("name: " + t.getUsername());
                                                 if(t.getUsername().equalsIgnoreCase(usrname)) {
                                                     laytut.removeAllViews();
                                                     found = true;
-                                                    System.out.println(t.getName() + " asas");
                                                     TextView tx = new TextView(context);
                                                     tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                                                     tx.setText(t.getName());
@@ -494,16 +485,14 @@ public class ProfilePage extends AppCompatActivity {
                                                     cards.clear();
                                                     card.setClickable(true);
                                                     cards.add(card);
+                                                    //add clicked selection
                                                     card.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View view) {
                                                             selTutor.clear();
                                                             selTutor.add(t);
-                                                            boolean unsel = false;
-                                                            System.out.println(selTutor.get(0));
+                                                            //change color for clicked cards
                                                             for(CardView c: cards){
-                                                                System.out.println(c.getDrawingCacheBackgroundColor());
-                                                                System.out.println(c.getSolidColor());
                                                                 if(c.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
                                                                     c.setCardBackgroundColor(getResources().getColor(R.color.white));
                                                                     break;
@@ -528,8 +517,9 @@ public class ProfilePage extends AppCompatActivity {
                                                     Toast.makeText(context,"No user specified", Toast.LENGTH_SHORT).show();
                                                     laytut.removeAllViews();
                                                     empty = true;
+                                                    //create cards based on tutors in database
                                                     for(User t2: tutors){
-                                                        System.out.println(t2.getName() + " asas");
+
                                                         TextView tx = new TextView(context);
                                                         tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                                                         tx.setText(t2.getName());
@@ -545,25 +535,22 @@ public class ProfilePage extends AppCompatActivity {
                                                         cards.clear();
                                                         card.setClickable(true);
                                                         cards.add(card);
+
+                                                        //add clicked selection
                                                         card.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
                                                                 selTutor.clear();
                                                                 selTutor.add(t2);
-                                                                boolean unsel = false;
-                                                                System.out.println(selTutor.get(0));
+                                                               //change color for clicked cards
                                                                 for(CardView c: cards){
-                                                                    System.out.println(c.getDrawingCacheBackgroundColor());
-                                                                    System.out.println(c.getSolidColor());
                                                                     if(c.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
-                                                                        System.out.println("entered");
                                                                         c.setCardBackgroundColor(getResources().getColor(R.color.white));
                                                                         break;
                                                                     }
                                                                 }
                                                                 if(card.getCardBackgroundColor().equals(getResources().getColorStateList(R.color.baby_blue))){
                                                                     card.setCardBackgroundColor(getResources().getColor(R.color.white));
-                                                                    System.out.println("ceheckede");
                                                                 }
                                                                 else{
                                                                     card.setCardBackgroundColor(getResources().getColorStateList(R.color.baby_blue));
@@ -584,14 +571,9 @@ public class ProfilePage extends AppCompatActivity {
                                             }
                                         }
                                     });
-
-
                                 }
                             });
-
-
                         }
-
                     }
                 });
 
@@ -603,33 +585,5 @@ public class ProfilePage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
-
-//        //User user = getIntent().getParcelableExtra("user");
-//        User user = new User("username", "Firstname Surname", "password", true,
-//                false, "911111111111111", "email@email.com");
-
-//        User user3 = new User("username1", "Bobby(OG) Johnson", "password", false,
-//                true, "911", "email1@email.com");
-
-
-
-
-
-
-        //else{
-//            for(User x: user.getStudentRole().getTutorHistory()){
-//                int i=0;
-//                TextView tx = new TextView(this);
-//                tx.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-//                tx.setText(x.getName());
-//                tx.setId(i);
-//                i++;
-//                ((LinearLayout) layout).addView(tx);
-//            }
-//        }
-
-        ;
-
-
     }
 }
